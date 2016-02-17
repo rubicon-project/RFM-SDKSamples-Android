@@ -1,40 +1,4 @@
-# RFM-SDKSamples-Android
-# OS Generated Files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-.Icon?
-ehthumbs.db
-Thumbs.db
+RFM Ad SDK Samples for Android
+This repository contains sample applications that show how to integrate Rubicon Project's Mobile Ads SDK into an Android Application Project. Please refer to our developer portal (http://dev.rubiconproject.com/docs/Mobile_SDK_for_Android) for detailed integration guide.
 
-#Android Gitignore#
-###################
-# built application files
-*.apk
-*.ap_
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
-bin/
-gen/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Eclipse project files
-.classpath
-.project
-
-
-# Android Studio
-.gradle
-.idea
-build/
+You can download our latest SDKs from this repository

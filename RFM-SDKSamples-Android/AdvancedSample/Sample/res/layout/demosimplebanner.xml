@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:orientation="vertical"
+  
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+
+
+<RelativeLayout
+	android:id="@+id/toplayout"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+
+	<Button
+		android:id="@+id/getadbuttonone"
+		android:layout_width="wrap_content"
+		android:layout_height="50dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="20dp"
+		android:text="@string/getAd" 
+		android:textSize="14sp" 
+		android:layout_alignParentLeft="true"/>
+		
+	<Button
+		android:id="@+id/getlocationone"
+		android:layout_width="wrap_content"
+		android:layout_height="50dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="20dp"
+		android:text="@string/getLocation" 
+		android:textSize="14sp" 
+		android:layout_toRightOf="@id/getadbuttonone"/>
+		
+	<Button
+		android:id="@+id/clearconsoleone"
+		android:layout_width="wrap_content"
+		android:layout_height="50dp"
+		android:layout_toRightOf="@id/getlocationone"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="20dp"
+		android:text="@string/clearConsole" 
+		android:textSize="14sp" />
+
+		
+		
+</RelativeLayout>
+		
+   <com.rfm.sdk.RFMAdView 
+        android:layout_marginTop="10dp" 
+        android:id="@+id/bannerviewone" 
+        android:layout_height="50dp" 
+        android:layout_width="fill_parent"
+        android:layout_gravity="center" />
+        
+           
+   <TextView 
+    android:id="@+id/debugconsoleviewone" 
+    android:layout_margin="20dp"
+    android:scrollbars = "vertical"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    android:typeface="monospace"
+    android:textColor="#000000"
+    android:textSize = "11sp"
+    android:text="@string/defaultConsoleText"
+    android:maxLines="1500" >
+    
+   </TextView>
+    
+
+
+</LinearLayout>
