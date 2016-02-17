@@ -1,9 +1,8 @@
 /*
- * Copyright (C) 2016 Rubicon Project. All rights reserved
- *
- * @author: Rubicon Project.
+ * Copyright (c) 2016. Rubicon Project. All rights reserved
  *
  */
+
 package com.rubicon.rfmsample;
 
 /**

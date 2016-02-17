@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/expand_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/expandable_header"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/expand_list_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/counters"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/expand_button"
+            android:padding="10dp"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:src="@drawable/ic_clear_white" />
+
+        <ImageView
+            android:id="@+id/expand_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:src="@drawable/ic_arrow_down_white" />
+    </RelativeLayout>
+</merge>

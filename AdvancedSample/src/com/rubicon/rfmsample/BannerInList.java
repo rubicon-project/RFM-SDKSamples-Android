@@ -1,92 +1,56 @@
+/*
+ * Copyright (c) 2016. Rubicon Project. All rights reserved
+ *
+ */
+
 package com.rubicon.rfmsample;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMAdViewListener;
+import com.rfm.sdk.RFMConstants;
 
 public class BannerInList extends BaseActivity {
 
+	private final String LOG_TAG = "BannerInList";
 	private ListView mListView = null;
-	private Button getDemoAd = null;
 	private InfoListAdapter infoAdapter = null;
 	public static DisplayMetrics dm = null;
-	private Button mClearConsoleButton;
-	private Button mGetLocationButton;
-	private TextView mDebugConsoleView;
+	protected String sizeParams = "fillparent x 50dp";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.demolistview);
 
-		LOG_TAG = "BannerInList";
 		dm = fetchScreenSize(this);
 
 		mListView = (ListView) findViewById(R.id.listobj);
 		mListView.setVisibility(View.VISIBLE);
-		mDebugConsoleView = (TextView) findViewById(R.id.debugconsoleviewone);
-		mDebugConsoleView.setBackgroundColor(Color.WHITE);
-		mDebugConsoleView.setMovementMethod(new ScrollingMovementMethod());
 
 		if (mAdRequest == null) {
 			mAdRequest = new RFMAdRequest();
 		}
 
-		configureAdFromPrefs();
-		getDemoAd = (Button) findViewById(R.id.getadbuttonone);
-		// hidden as we are fetching ads when the list stops scrolling
-		getDemoAd.setVisibility(View.GONE);
-		getDemoAd.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				if (infoAdapter == null) {
-					return;
-				}
+		if (mRfmAdTestMode)
+			mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
 
-				appendTextToConsole("\n\n****Get Ad Clicked****");
-				appendTextToConsole("Requesting Ad from RFM SDK");
-
-				if (infoAdapter.getAdview() != null && !infoAdapter.requestAd()) {
-					appendTextToConsole("ad request denied");
-				} else {
-					appendTextToConsole("ad request accepted, waiting for ad");
-				}
-			}
-		});
-
-		mClearConsoleButton = (Button) findViewById(R.id.clearconsoleone);
-		mClearConsoleButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				clearDebugConsole();
-			}
-		});
-
-		//Obtain device location. Use fixed lat/long from settings menu if set.
-		mGetLocationButton = (Button) findViewById(R.id.getlocationone);
-		mGetLocationButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				configureLocation();
-			}
-		});
+		if (!"0".equalsIgnoreCase(mRfmAdId))
+			mAdRequest.setRFMTestAdId(mRfmAdId);
+		mAdRequest.setRFMParams(mRfmServer, mRfmPubId, mRfmAppId);
 
 		infoAdapter = new InfoListAdapter(this, 100, sizeParams, new AdRFMAdViewListener(), mAdRequest);
 		mListView.setAdapter(infoAdapter);
-		adView = infoAdapter.getAdview();
+		mAdView = infoAdapter.getAdview();
 
 		mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -125,11 +89,27 @@ public class BannerInList extends BaseActivity {
 
 		});
 
+		setLoadAdAction();
 	}
 
-	private void clearDebugConsole() {
-		mDebugConsoleView.setText("RFM Sample App Ad Status \n--------------------------------\n");
-		mDebugConsoleView.bringPointIntoView(0);
+	@Override
+	public void loadAd() {
+
+	}
+
+	@Override
+	public void updateAdView() {
+		if (mAdWidth != 0)
+			mAdView.getLayoutParams().width = mAdWidth * mDisplayDensity;
+		if (mAdHeight != 0) {
+			if (mAdHeight == -1) {
+				mAdView.getLayoutParams().height = mDisplayHeight;
+				// will help to redraw view after setting it to device screen size
+				//loadAd();
+			} else {
+				mAdView.getLayoutParams().height = mAdHeight * mDisplayDensity;
+			}
+		}
 	}
 
 	public static DisplayMetrics fetchScreenSize(Context context) {
@@ -140,33 +120,6 @@ public class BannerInList extends BaseActivity {
 		return metrics;
 	}
 
-	public void updateLocationInfo(String locationData) {
-		appendTextToConsole(locationData);
-	}
-
-	private void appendTextToConsole(String data) {
-		mDebugConsoleView.append(data + "\n");
-		Log.d(LOG_TAG, data);
-		mDebugConsoleView.post(new Runnable() {
-			public void run() {
-				final int scrollAmount = mDebugConsoleView.getLayout().getLineTop(mDebugConsoleView.getLineCount())
-						- mDebugConsoleView.getHeight();
-				// if there is no need to scroll, scrollAmount will be <=0
-				if (scrollAmount > 0)
-					mDebugConsoleView.scrollTo(0, scrollAmount);
-				else
-					mDebugConsoleView.scrollTo(0, 0);
-			}
-		});
-	}
-
-	public void configureAdFromPrefs() {
-		// Set Orientation Params
-		configureOrientation();
-
-		// Set Location Params
-		configureLocation();
-	}
 
 	class AdRFMAdViewListener implements RFMAdViewListener {
 		/*
@@ -189,8 +142,8 @@ public class BannerInList extends BaseActivity {
 		public void onAdRequested(RFMAdView adView, String requestUrl, boolean adRequestSuccess) {
 			Log.v(LOG_TAG, "onAdRequested being invoked");
 			appendTextToConsole("RFM Ad: Requesting Url:" + requestUrl);
-			if (BannerInList.this.adView == null) {
-				BannerInList.this.adView = BannerInList.this.infoAdapter.getAdview();
+			if (BannerInList.this.mAdView == null) {
+				BannerInList.this.mAdView = BannerInList.this.infoAdapter.getAdview();
 			}
 		}
 
@@ -204,11 +157,11 @@ public class BannerInList extends BaseActivity {
 		public void onAdReceived(RFMAdView adView) {
 			Log.v(LOG_TAG, "Ad Received");
 			appendTextToConsole("RFM Ad: Received");
-			if (BannerInList.this.adView == null) {
-				BannerInList.this.adView = BannerInList.this.infoAdapter.getAdview();
+			if (BannerInList.this.mAdView == null) {
+				BannerInList.this.mAdView = BannerInList.this.infoAdapter.getAdview();
 			}
-			BannerInList.this.adView.setVisibility(View.VISIBLE);
-			BannerInList.this.adView.displayAd();
+			BannerInList.this.mAdView.setVisibility(View.VISIBLE);
+			BannerInList.this.mAdView.displayAd();
 		}
 
 		/*
@@ -220,10 +173,10 @@ public class BannerInList extends BaseActivity {
 		 */
 		public void onAdFailed(RFMAdView adView) {
 			appendTextToConsole("RFM Ad: Failed");
-			if (BannerInList.this.adView == null) {
-				BannerInList.this.adView = BannerInList.this.infoAdapter.getAdview();
+			if (BannerInList.this.mAdView == null) {
+				BannerInList.this.mAdView = BannerInList.this.infoAdapter.getAdview();
 			}
-			BannerInList.this.adView.setVisibility(View.GONE);
+			BannerInList.this.mAdView.setVisibility(View.GONE);
 		}
 
 		/*
@@ -249,7 +202,6 @@ public class BannerInList extends BaseActivity {
 
 		@Override
 		public void onAdResized(RFMAdView arg0, int arg1, int arg2) {
-			// TODO Auto-generated method stub
 			Log.v(LOG_TAG, "RFM Ad: resized to width " + arg1 + ", height = " + arg2);
 			appendTextToConsole("RFM Ad: Ad Resized");
 		}
@@ -268,14 +220,9 @@ public class BannerInList extends BaseActivity {
 
 	}
 
-
 	@Override
 	public void onDestroy() {
-//		if (infoAdapter != null) {
-//			infoAdapter.destroyAdView();
-//		}
 		RFMAdView.clearAds();
 		super.onDestroy();
 	}
-
 }
