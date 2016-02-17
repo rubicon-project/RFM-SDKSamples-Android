@@ -25,6 +25,15 @@
             </intent-filter>
         </activity>
 
+        <!-- com.rfm.sdk.HTMLBrowserView: required for RFM SDK -->
+        <activity
+            android:name="com.rfm.sdk.HTMLBrowserView"
+            android:configChanges="orientation" />
+
+        <!-- com.rfm.sdk.MraidVideoPlayerActivity: required for RFM SDK to serve video ads -->
+        <activity
+            android:name="com.rfm.sdk.MraidVideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
