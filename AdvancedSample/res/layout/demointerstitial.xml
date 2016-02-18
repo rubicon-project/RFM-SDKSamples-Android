@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <com.rfm.sdk.RFMAdView
+        android:id="@+id/bannerviewone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/toplayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/getadbuttonone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/getAd"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/getlocationone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getadbuttonone"
+            android:text="@string/getLocation"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/clearconsoleone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getlocationone"
+            android:text="@string/clearConsole"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkFullScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/clearconsoleone"></CheckBox>
+
+        <TextView
+            android:id="@+id/labelFullScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/checkFullScreen"
+            android:text="@string/fullscreen" />
+
+        <CheckBox
+            android:id="@+id/getCachedAd"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"></CheckBox>
+
+        <TextView
+            android:id="@+id/labelCachedAd"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getCachedAd"
+            android:text="@string/getcachedad" />
+
+        <Button
+            android:id="@+id/displayadbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/labelCachedAd"
+            android:text="@string/displayad"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/debugconsoleviewone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp"
+        android:maxLines="1500"
+        android:scrollbars="vertical"
+        android:text="@string/defaultConsoleText"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        android:typeface="monospace">
+
+    </TextView>
+
+
+</LinearLayout>
