@@ -1,0 +1,19 @@
+<resources>
+
+    <color name="window_background">#FFF5F5F5</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="slate_blue">#007FFF</color>
+    <color name="default_background">#FFDEDEDE</color>
+    <color name="rubicon_red">#F44336</color>
+    <color name="rubicon_blue">#ff007fe6</color>
+    <color name="text_color">#757575</color>
+
+    <color name="backdrop_subtext">#FAC5C2</color>
+
+    <color name="ad_view_background">#3C3C3C</color>
+
+    <color name="expandable_header">#D32F2F</color>
+    <color name="seperator_background">#757575</color>
+</resources>

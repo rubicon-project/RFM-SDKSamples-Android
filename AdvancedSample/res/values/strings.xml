@@ -1,131 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RFM</string>
-    
+
+
+    <!-- Sample Main Activity -->
+    <string name="item_deleted">Item Deleted</string>
+    <string name="main_activity_title">RFM Sample</string>
+    <string name="preset">PRESET</string>
+    <string name="user_defined">USER DEFINED</string>
+    <string name="header">Header</string>
+
+    <!-- Add test case -->
+    <string name="menu_add_test_case">Add Test Case</string>
+    <string name="add_test_case">Add Test Case</string>
+    <string name="test_case_name">Test Case Name</string>
+    <string name="rfm_server_name">RFM Server Name</string>
+    <string name="rfm_pub_id">RFM Pub ID</string>
+    <string name="rfm_app_id">RFM App ID</string>
+    <string name="rfm_ad_id">RFM Ad ID</string>
+    <string name="rfm_server">http://mrp.rubiconproject.com</string>
+
+    <!-- menu -->
+    <string name="settings">Settings</string>
+    <string name="save_settings">Test Case Settings</string>
+
+    <!-- About screen constants -->
+    <string name="rfm_sdk_version">RFM SDK Version</string>
+    <string name="sample_app_version">Sample App Version</string>
+    <string name="about">About</string>
+
+    <!-- Settings Activity -->
+    <string name="seperator_refresh">REFRESH</string>
+    <string name="refresh_count">Refresh Count</string>
+    <string name="refresh_interval">Refresh Interval (ms)</string>
+    <string name="location_seperator">LOCATION TARGETING</string>
+    <string name="location_latitude">Latitude</string>
+    <string name="location_longitude">Longitude</string>
+    <string name="location_type">Location Type</string>
+    <string name="text_zero">0</string>
+    <string name="size">SIZE</string>
+    <string name="width">Width(dp)</string>
+    <string name="height">Height(dp)</string>
+    <string name="device_width">Device Width</string>
+    <string name="custom_width">Custom Width</string>
+    <string name="device_height">Device Height</string>
+    <string name="custom_height">Custom Height</string>
+    <string name="test_settings">TEST SETTINGS</string>
+    <string name="test_mode_enable">Test Mode Enable</string>
+    <string name="test_ad_id">Test Ad ID</string>
+    <string name="ad_id_rfm_text">Ad ID of RFMAd to be fetched</string>
+    <string name="full_screen">Fullscreen Ad</string>
+    <string name="cached_ad">Cached Ad</string>
+    <string name="video_ad">Video Ads</string>
+
+    <!-- alert messages -->
+    <string name="db_upload_success">SUCCESS: created test cases from json file!</string>
+    <string name="db_upload_failure">FAILURE: failed to parse json file!</string>
+    <string name="json_file_not_found">FAILURE: input json file not found!</string>
+
+
+    <!-- Simple banner Activity -->
+    <string name="site_id">Site ID:</string>
+    <string name="app_id">App ID: %s</string>
+    <string name="counters">Counters</string>
+    <string name="counter_text">Requests : 0\nSuccess : 0\nFailure : 0</string>
+    <string name="default_stats_console_text">Sample App Ad Status \n---------------------------------------\n</string>
+    <string name="logs">Logs</string>
+
+
     <!-- Values used in Demo activities -->
     <string name="getAd">Get Ad</string>
-    <string name="startAds">Start Ads</string>
-    <string name="stopAds">Stop Ads</string>
     <string name="getLocation">Get Location</string>
     <string name="clearConsole">Clear Console</string>
     <string name="defaultConsoleText">Sample App Ad Status \n--------------------------------\n</string>
-    <string name="defaultStatsConsoleText">Sample App Stats \n------------------\n</string>    
-    
-    <!-- List of demo activity names  -->
-    <string-array
-        name="testcase_activities">
-       <item>com.rubicon.rfmsample.SimpleBanner</item>
-       <item>com.rubicon.rfmsample.TimerBasedBanner</item>
-       <item>com.rubicon.rfmsample.InterstitialAd</item>
-       <item>com.rubicon.rfmsample.BannerInList</item>
-       <item>com.rubicon.rfmsample.BannerOffScreen</item>
-     </string-array>
-    <string-array
-        name="testcase_titles">
-        <item>Simple Banner</item>
-        <item>Timer based Banner Ad</item>
-        <item>Interstitials</item>
-        <item>Banner in List</item>
-        <item>Off Screen Banner Ad </item>
-    </string-array>
-    <string-array name="testcase_descriptions">
-        <item> - Banner Ad with RFMAdView.\n" </item>
-        <item> -  Timer based periodic requests for Banner Ads. \n</item>
-        <item> -  Interstitial Ad, full screen and sized interstitials \n</item>
 
-        <item> -  Banner Ad in List, HTML and Image Banners\n
-               - Banner Size: fill_parent width and 50dp height"
-        </item>
+    <string name="displayad">Display Cached Ad</string>
 
-        <item> -  Ad created for off screen banners.\n
-               - Swipe left: Move RFMAdView left by -1500dp.\n
-               - Swipe right: Move RFMAdView right by 1500dp.\n
-               - Swipe down/up: RFMAdView set to top/left of screen.\n
-        </item>
-    </string-array>
-     <string-array 
-         name="adsizeoptions">
-         <item>fillparent x 50dp</item>
-         <item>320dp x 50dp</item>
-         <item>300dp x 100dp</item>
-     
-    </string-array>
-       <string-array  name="adsizevalues">
-	       <item>fillparent x 50dp</item>
-	       <item>320dp x 50dp</item>
-	       <item>300dp x 100dp</item>
-       </string-array>
-      <string-array 
-         name="orientationoptions">
-       <item>Handle orientation change </item>
-       <item>Lock orientation to portrait</item>
-       <item>Lock orientation to landscape</item>
-    </string-array>
-    <string-array name="orientationvalues">
-       <item>All</item>
-       <item>Portrait</item>
-       <item>Landscape</item>
-    </string-array>
-    
-     <string-array name="locationoptions">
-       <item>Use Fixed Location</item>
-       <item>Use IP Based Location</item>
-       <item>Use GPS Based Location</item>
-       <item>None</item>
-    </string-array>
-    <string-array name="locationvalues">
-       <item>Fixed</item>
-       <item>IP</item>
-       <item>GPS</item>
-       <item>None</item>
-    </string-array>   
-       
-    <!-- Keys used in preferences view -->
-    <string name="serverSettingsCatKey">required_settings</string>
-    <string name="testModeCatKey">optional_test_settings</string>
-    <string name="locationCatKey">optional_loc_settings</string> 
-    <string name="sdkInfoCatKey">sdk_info_settings</string> 
-    
-    <string name="serverNameETKey">mbsserver_name</string>
-    <string name="appIdETKey">mbsapp_id</string>
-    <string name="pubIdETKey">mbs_id</string>
-    <string name="testModeCBKey">mbstest_mode</string>
-    <string name="testAdIdETKey">mbsad_id</string>
-    <string name="fixedLocCBKey">mbslocation_override</string>
-    <string name="fixedLatETKey">mbslocation_lat</string>
-    <string name="fixedLongETKey">mbslocation_long</string>
-    <string name="sdkVersionTextKey">rfm_sdk_ver</string>
-    
-    <!-- Values used in Preferences view -->
-    <string name="serverSettingsCatTitle">Required Server Settings</string>
-    <string name="testModeCatTitle">Optional Test Mode Settings</string>
-    <string name="locationCatTitle">Optional location targeting settings</string> 
-    <string name="sdkInfoCatTitle">SDK Info</string> 
-    
-    <string name="serverNameETTitle">Server (end with /)</string>
-    <string name="appIdETTitle">RFM App Id</string>
-    <string name="appIdTitle">RFM App Id</string>
-    <string name="pubIdETTitle">RFM Publisher Id</string>
-     <string name="testAdIdTitle">RFM Ad Id</string>
-    <string name="appIdHistoryTitle"> App Id from History  </string>
-    <string name="testModeCBTitle">Test Mode</string>
-    <string name="testAdIdETTitle">Test Ad Id</string>
-    <string name="testAdHistoryTitle"> Ad Id from History </string>
-    <string name="fixedLocCBTitle">Use fixed lat,long</string>
-    <string name="fixedLatETTitle">Fixed Latitude</string>
-    <string name="fixedLongETTitle">Fixed Longitude</string>
-    <string name="sdkVersionTextTitle">SDK Version</string>
-    <string-array name="locTypeListArray">
-        <item>none</item>
-        <item>ip</item>
-        <item>gps</item>
-        <item>auto</item>
-    </string-array>
-    <string name="bannerAd">Banner</string>
-    <string name="multipleAd">Banner and Interstitial </string>
-    <string name="interstitialAd">Interstitial Only</string>
-    <string name="displayad">Display Ad</string>
-    <string name="fullscreen">FullScreen</string>
-    <string name="getcachedad">Get Cached Ad</string>
-    
 </resources>

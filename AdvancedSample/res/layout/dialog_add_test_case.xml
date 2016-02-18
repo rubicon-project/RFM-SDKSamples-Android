@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/test_case_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_test_case"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.TextInputLayout style="@style/AddDialog.TextInputLayout">
+
+        <EditText
+            android:id="@+id/test_case_name_edittext"
+            style="@style/AddDialog.EditText"
+            android:hint="@string/test_case_name"
+            android:maxLength="100"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout style="@style/AddDialog.TextInputLayout">
+
+        <EditText
+            android:id="@+id/rfm_server_name_editext"
+            style="@style/AddDialog.EditText"
+            android:hint="@string/rfm_server_name"
+            android:maxLength="150"
+            android:text="@string/rfm_server" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout style="@style/AddDialog.TextInputLayout">
+
+        <EditText
+            android:id="@+id/rfm_pub_id_edittext"
+            style="@style/AddDialog.EditText"
+            android:hint="@string/rfm_pub_id"
+            android:inputType="number"
+            android:maxLength="100"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout style="@style/AddDialog.TextInputLayout">
+
+        <EditText
+            android:id="@+id/rfm_app_id_edittext"
+            style="@style/AddDialog.EditText"
+            android:hint="@string/rfm_app_id"
+            android:maxLength="100"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout style="@style/AddDialog.TextInputLayout">
+
+        <EditText
+            android:id="@+id/rfm_ad_id_edittext"
+            style="@style/AddDialog.EditText"
+            android:hint="@string/rfm_ad_id"
+            android:maxLength="100"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/ad_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
