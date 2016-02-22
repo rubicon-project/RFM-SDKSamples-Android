@@ -4,61 +4,64 @@
  * @author: Rubicon Project.
  * 
  */
-
-
 package com.rubicon.rfmsample;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.HashMap;
+
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMAdViewListener;
 import com.rfm.sdk.RFMConstants;
-import com.rfm.sdk.adissue.RFMAdForensicsStatusListener;
-// Required for RFM SDK integration
+import com.rfm.sdk.ui.mediator.RFMBaseMediator;
+import com.rubicon.rfmsample.SimpleGestureFilter.SimpleGestureListener;
 
-
-/**
- * Demo Case #1:<br>
- *  1. Demo with RFMAdView created in XML.<br>
- *  2. Banner Size: fill_parent width and 50dp height.<br>
- *  3. Banner Position: below an ad request button.<br>
- *  4. Device Orientation: Activity handles orientation change to prevent view reload.<br>
- *  5. Optional APIs: GPS location passed by application.<br>
- */
-public class SimpleBanner extends BaseActivity {
+public class BannerOffScreen extends BaseActivity implements SimpleGestureListener {
 
 	//View components
     private Button mGetAdButton;
     private TextView mDebugConsoleView;
     private Button mClearConsoleButton;
     private Button mGetLocationButton;
+    private SimpleGestureFilter detector;
 
-    
+    private static final String LOG_TAG = "BannerOffScreen";
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LOG_TAG = "SimpleBanner";
-		setContentView(R.layout.demosimplebanner);
-  
+        setContentView(R.layout.demooffscreen);
+        // Detect touched area
+        detector = new SimpleGestureFilter(this,this);
         //set layout elements
-        mGetAdButton = (Button) findViewById(R.id.getadbuttonone);
-        mDebugConsoleView = (TextView) findViewById(R.id.debugconsoleviewone);
+        mGetAdButton = (Button) findViewById(R.id.getadbuttonoffscreen);
+        
+        mDebugConsoleView = (TextView) findViewById(R.id.debugconsoleviewswipe);
         mDebugConsoleView.setBackgroundColor(Color.WHITE);
         mDebugConsoleView.setMovementMethod(new ScrollingMovementMethod());
 
         //Layout banner ad view
-        if(adView == null) {
-      	  adView = (RFMAdView) findViewById(R.id.bannerviewone);
+        if(adView == null){
+      	  adView = (RFMAdView) findViewById(R.id.bannerviewoffscreen);
 		  adView.setVisibility(View.GONE);
 		  adView.setBackgroundColor(Color.TRANSPARENT);
-		}
+        }
 
         //Set Ad Request parameters
         if(mAdRequest == null) 
@@ -66,31 +69,21 @@ public class SimpleBanner extends BaseActivity {
        
         if(rfmAdTestMode)
        		mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
-
+       
         if(!"0".equalsIgnoreCase(rfmAdId))
        		mAdRequest.setRFMTestAdId(rfmAdId);
-		mAdRequest.setRFMParams(rfmServer, rfmPubId, rfmAppId);
 
-		// set this to have a fullscreen vast and publisher video playback
-		//adView.setFullScreenForInterstitial(true);
-		//mAdRequest.setVideoContent(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"), RFMConstants.RFM_VIDEO_MIDROLL);
-
-		// If the placement type is banner or interstitial
-		// the publisher app can use this api to get a VAST ad
-		// If the placement is in-stream this call is not required
-		// the boolean argument can be set to false to disable the VAST ad video auto play behaviour
-		//mAdRequest.setRFMAdAsVideo(false);
-
-		configureAdFromPrefs(); // Needs to called only after AdView and AdRequest objects are initialized
+        mAdRequest.setRFMParams(rfmServer,rfmPubId,rfmAppId);
+        
+        //Set ad dimensions(dp) in float. use -1 for fill_parent
+        //mAdRequest.setAdDimensionParams(-1, 50);
+		configureAdFromPrefs();
         mGetAdButton.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 	            	appendTextToConsole("\n\n****Get Ad Clicked****");	                
 	            	appendTextToConsole("Requesting Ad from RFM SDK");
-	            	
 	            	configureAdFromPrefs();
-
-					adView.enableHWAcceleration(true);
-	        		Log.v(LOG_TAG, " Information from Preferences "+mAdRequest.getRFMServerName()+" PUB "+mAdRequest.getRFMPubId()+ " appId "+mAdRequest.getRFMAppId() );
+	            	adView.enableHWAcceleration(true);
 	            	//Request Ad
 	                if(!adView.requestRFMAd(mAdRequest))
 	            	{
@@ -104,7 +97,7 @@ public class SimpleBanner extends BaseActivity {
 	        });
 
         
-        mClearConsoleButton =(Button) findViewById(R.id.clearconsoleone);
+        mClearConsoleButton =(Button) findViewById(R.id.clearconsoleswipe);
         mClearConsoleButton.setOnClickListener(new OnClickListener(){
      		public void onClick(View v) {
      			clearDebugConsole();
@@ -112,7 +105,7 @@ public class SimpleBanner extends BaseActivity {
         });
         
         //Obtain device location. Use fixed lat/long from settings menu if set.
-		mGetLocationButton =(Button) findViewById(R.id.getlocationone);
+        mGetLocationButton =(Button) findViewById(R.id.getlocationoffscreen);
         mGetLocationButton.setOnClickListener(new OnClickListener(){
      		public void onClick(View v) {
      			configureLocation();
@@ -142,7 +135,7 @@ public class SimpleBanner extends BaseActivity {
      		     * 
      		     */
      		    public void onAdRequested(RFMAdView adView, String requestUrl,boolean adRequestSuccess){
-     		    	SimpleBanner.this.adView.setVisibility(View.GONE);
+     		    	BannerOffScreen.this.adView.setVisibility(View.GONE);
      		    	appendTextToConsole("RFM Ad: Requesting Url:"+requestUrl);
      		    	
      		    }
@@ -156,8 +149,8 @@ public class SimpleBanner extends BaseActivity {
      			*/   
      			public  void onAdReceived(RFMAdView adView){
      		    	appendTextToConsole("RFM Ad: Received");
-     				SimpleBanner.this.adView.setVisibility(View.VISIBLE);
-     		    	//adView.displayAd();
+     				BannerOffScreen.this.adView.setVisibility(View.VISIBLE);
+     		    	BannerOffScreen.this.adView.displayAd();
      			}
      			
      			/*
@@ -168,7 +161,7 @@ public class SimpleBanner extends BaseActivity {
      			 * 
      			 */
      			public  void onAdFailed(RFMAdView adView){
-     		    	SimpleBanner.this.adView.setVisibility(View.GONE);
+     		    	BannerOffScreen.this.adView.setVisibility(View.GONE);
      				appendTextToConsole("RFM Ad: Failed");
      			}
      			
@@ -209,44 +202,69 @@ public class SimpleBanner extends BaseActivity {
 				}
 
 		   });
+
         }
 
-		// optional listener for ad issue data upload events
-		adView.setRFMAdForensicsStatusListener(new RFMAdForensicsStatusListener() {
-			@Override
-			public void rfmAdForensicsReportStarted() {
-				appendTextToConsole("Ad Issue rfmAdForensicsReportStarted");
-			}
-
-			@Override
-			public void rfmAdForensicsReportCompleted(boolean status, String errorMessage) {
-				appendTextToConsole("rfmAdForensicsReportCompleted status: " + status + " errorMessage: " + errorMessage);
-			}
-		});
-
     }
-    
+
     @Override
-    protected void onDestroy() {
-    	if(adView != null)
-			adView.rfmAdViewDestroy();
-
-		Log.d(LOG_TAG, "SimpleBanner Destroyed");
-		super.onDestroy();
+    public boolean dispatchTouchEvent(MotionEvent me){
+        // Call onTouchEvent of SimpleGestureFilter class
+        this.detector.onTouchEvent(me);
+        return super.dispatchTouchEvent(me);
     }
-    
-	 public void configureAdFromPrefs() {
-			// Set Size Params
-		 	confureAdSize();
 
-		 	// Set Location Params
-		 	configureLocation();
+    @Override
+    public void onSwipe(int direction) {
+        String str = "";
+        switch (direction) {
+            case SimpleGestureFilter.SWIPE_RIGHT:
+                str = "Swipe Right";
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                    final int left = 3000;
+                    final int top = 0;
+                    final int right = left + adView.getWidth();
+                    final int bottom = top + adView.getHeight();
+                    adView.layout(left, top, right, bottom);
+                } else {
+                    adView.setX(3000);
+                }
+                break;
+            case SimpleGestureFilter.SWIPE_LEFT:
+                str = "Swipe Left";
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                    final int left = -3000;
+                    final int top = 0;
+                    final int right = left + adView.getWidth();
+                    final int bottom = top + adView.getHeight();
+                    adView.layout(left, top, right, bottom);
+                } else {
+                    adView.setX(-3000);
+                }
+                break;
+            case SimpleGestureFilter.SWIPE_DOWN:
+            case SimpleGestureFilter.SWIPE_UP:
+                str = "Swipe Up/Down";
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                    final int left = 0;
+                    final int top = 0;
+                    final int right = left + adView.getWidth();
+                    final int bottom = top + adView.getHeight();
+                    adView.layout(left, top, right, bottom);
+                } else {
+                    adView.setX(0);
+                }
+                break;
+        }
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
 
-	        // Set Orientation Params
-	        configureOrientation();
-	 }
+    @Override
+    public void onDoubleTap() {
+        Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
+    }
 
-	private void clearDebugConsole(){
+    private void clearDebugConsole(){
     	mDebugConsoleView.setText("RFM Sample App Ad Status \n--------------------------------\n");
     	mDebugConsoleView.bringPointIntoView(0);
     }
@@ -271,4 +289,61 @@ public class SimpleBanner extends BaseActivity {
     	});
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+    	//Required for RFM SDK integration
+    	if(adView != null){
+			adView.rfmAdViewDestroy();
+    	}
+    	RFMAdView.clearAds();
+    	Log.d(LOG_TAG,"Demo Swipe Destroyed");
+        super.onDestroy();
+    }
+    
+    //Required for handling orientation changes
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        Log.d(LOG_TAG,"Demo Swipe Config changed" );
+        
+        //Required for RFM SDK integration: activity must inform RFMAdView if it is handling
+        //orientation change.
+        if(adView != null)
+        	adView.activityConfigurationChanged(newConfig);
+
+        super.onConfigurationChanged(newConfig); 
+    }
+	
+	public String getLocalIpAddress() {
+		try {
+		    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+		        NetworkInterface intf = en.nextElement();
+		        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+		            InetAddress inetAddress = enumIpAddr.nextElement();
+		            if (!inetAddress.isLoopbackAddress()) {
+		                return inetAddress.getHostAddress().toString();
+		            }
+		        }
+		    }
+		} catch (SocketException ex) {
+		    Log.e(LOG_TAG, ex.toString());
+		}
+		return null;
+	}
+	
+	 public void configureAdFromPrefs() {
+			// Set Size Params
+	    	confureAdSize();
+
+		 	// Set Location Params
+		 	configureLocation();
+
+	        // Set Orientation Params
+	        configureOrientation();
+	 }
 }

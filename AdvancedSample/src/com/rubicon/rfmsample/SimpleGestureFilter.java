@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2016. Rubicon Project. All rights reserved
- *
- */
-
 package com.rubicon.rfmsample;
 
 import android.app.Activity;

@@ -1,7 +1,13 @@
 /*
- * Copyright (c) 2016. Rubicon Project. All rights reserved
+ * Copyright (C) 2015 Rubicon Project. All rights reserved
+ *
+ * @author: Rubicon Project.
+ * Class for integrating FBAN Mediation with RFM SDK
+ * FBAN SDK will be triggered via RFM Custom Events
+ * The following Classname should be specified on RFM Server for Custom Event
  *
  */
+
 
 package com.rfm.sdk.mediator;
 

@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2016. Rubicon Project. All rights reserved
- *
+ * Copyright (C) 2012 Rubicon Project. All rights reserved
+ * 
+ * @author: Rubicon Project.
+ * 
  */
 
 package com.rubicon.rfmsample;
@@ -8,18 +10,23 @@ package com.rubicon.rfmsample;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMAdViewListener;
+import com.rfm.sdk.RFMConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +43,12 @@ public class InfoListAdapter extends BaseAdapter {
 	boolean firstTimeAdrequested = false;
 	private RFMAdView mBanner;
 	private RFMAdRequest mAdRequest;
+	private SharedPreferences sharedPrefs;
+	private String rfmServer;
+	private String rfmAppId;
+	private String rfmPubId;
+	private String rfmAdId;
+	private boolean rfmAdTestMode;
 	private static String LOG_TAG = "InfoListAdapter";
 	protected RFMAdViewListener adViewListener;
 	private int TYPE_NOT_AD = 0;
@@ -133,7 +146,7 @@ public class InfoListAdapter extends BaseAdapter {
 				View v = convertView;
 				if (v == null) {
 					LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					v = vi.inflate(R.layout.banner_list_item, parent, false);
+					v = vi.inflate(R.layout.list_item, parent, false);
 
 					nonAdViewHolder = new NonAdViewHolder();
 					nonAdViewHolder.mainText = (TextView) v.findViewById(R.id.maintitle);
@@ -175,7 +188,7 @@ public class InfoListAdapter extends BaseAdapter {
 				if (adViewHolder.rfmAdView != null) {
 					mBanner = adViewHolder.rfmAdView;
 					LayoutParams bannerLayout = (LayoutParams) mBanner.getLayoutParams();
-					bannerLayout.width = LayoutParams.MATCH_PARENT;
+					bannerLayout.width = LinearLayout.LayoutParams.FILL_PARENT;
 					bannerLayout.height = (int)(50* BannerInList.dm.density);
 					bannerLayout.gravity = Gravity.CENTER;
 					mBanner.setLayoutParams(bannerLayout);
@@ -203,7 +216,7 @@ public class InfoListAdapter extends BaseAdapter {
 	}
 
 	protected boolean requestAd() {
-		//initAdView();
+		initAdView();
 		Log.v(LOG_TAG, "Requesting Ad with Server " + mAdRequest.getRFMServerName() + " PUB " + mAdRequest.getRFMPubId() + " appId " + mAdRequest.getRFMAppId());
 		addListener();
 		// Location info
@@ -211,6 +224,30 @@ public class InfoListAdapter extends BaseAdapter {
 
 		mBanner.setVisibility(View.GONE);
 		return mBanner.requestRFMAd(mAdRequest);
+	}
+
+	private void initAdView() {
+		if(sharedPrefs == null) {
+			sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		}
+		rfmAdId=sharedPrefs.getString("rfmad_id", "0");
+		rfmServer = sharedPrefs.getString("rfmserver_name", "Empty");
+		rfmPubId= sharedPrefs.getString("rfmpub_id", SamplePreferences.DEFAULT_PUB_ID);
+		rfmAppId = sharedPrefs.getString("rfmapp_id", SamplePreferences.DEFAULT_APP_ID);
+		rfmAdTestMode = sharedPrefs.getBoolean("rfmtest_mode", false);
+
+		mBanner.enableHWAcceleration(true);
+		mBanner.setBackgroundColor(Color.TRANSPARENT);
+
+		if(rfmAdTestMode) {
+			mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
+		}
+
+		if(!"0".equalsIgnoreCase(rfmAdId))
+			mAdRequest.setRFMTestAdId(rfmAdId);
+
+		Log.v(LOG_TAG, " Setting Information from APP "+rfmServer+" PUB "+rfmPubId+ " appId "+rfmAppId );
+		mAdRequest.setRFMParams(rfmServer,rfmPubId,rfmAppId);
 	}
 
 	private void addListener() {
@@ -251,7 +288,9 @@ public class InfoListAdapter extends BaseAdapter {
 
 				@Override
 				public void onAdResized(RFMAdView arg0, int arg1, int arg2) {
+					// TODO Auto-generated method stub
 					Log.v(LOG_TAG, "RFM Ad: resized to width " + arg1 + ", height = " + arg2);
+
 				}
 
 				@Override

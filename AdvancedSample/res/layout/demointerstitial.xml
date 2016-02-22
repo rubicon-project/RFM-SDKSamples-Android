@@ -1,82 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+
+    android:layout_height="fill_parent"
     android:orientation="vertical">
 
     <com.rfm.sdk.RFMAdView
-        android:id="@+id/interstitialviewone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:id="@+id/bannerviewone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/interstitial_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/toplayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <include layout="@layout/collapsing_toolbar" />
+        <Button
+            android:id="@+id/getadbuttonone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/getAd"
+            android:textSize="12sp" />
 
-        <android.support.v4.widget.NestedScrollView
-            style="@style/AdView.NestedScroll"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <Button
+            android:id="@+id/getlocationone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getadbuttonone"
+            android:text="@string/getLocation"
+            android:textSize="12sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/clearconsoleone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getlocationone"
+            android:text="@string/clearConsole"
+            android:textSize="12sp" />
 
-                <Button
-                    android:id="@+id/displayad"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:background="@color/slate_blue"
-                    android:text="@string/displayad"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+        <CheckBox
+            android:id="@+id/checkFullScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/clearconsoleone"></CheckBox>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+        <TextView
+            android:id="@+id/labelFullScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/checkFullScreen"
+            android:text="@string/fullscreen" />
 
-                    <LinearLayout style="@style/Widget.CardContent">
+        <CheckBox
+            android:id="@+id/getCachedAd"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"></CheckBox>
 
-                        <include layout="@layout/expand_list_header_row" />
+        <TextView
+            android:id="@+id/labelCachedAd"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/getCachedAd"
+            android:text="@string/getcachedad" />
 
-                        <TextView
-                            android:id="@+id/counters_text_view_content"
-                            style="@style/AdView.CountersTextView" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
-
-                    <LinearLayout style="@style/Widget.CardContent">
-
-                        <include layout="@layout/expand_list_header_row_2" />
-
-                        <TextView
-                            android:id="@+id/log_text"
-                            style="@style/AdView.LogsTextView" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
+        <Button
+            android:id="@+id/displayadbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/getadbuttonone"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/labelCachedAd"
+            android:text="@string/displayad"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
 
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/debugconsoleviewone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp"
+        android:maxLines="1500"
+        android:scrollbars="vertical"
+        android:text="@string/defaultConsoleText"
+        android:textColor="#000000"
+        android:textSize="11sp"
+        android:typeface="monospace">
 
-        <include layout="@layout/floating_action_button" />
-    </android.support.design.widget.CoordinatorLayout>
+    </TextView>
+
 
 </LinearLayout>
