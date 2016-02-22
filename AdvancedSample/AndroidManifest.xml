@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rubicon.rfmsample"
-    android:versionCode="26"
-    android:versionName="4.0.0">
+    android:versionCode="27"
+    android:versionName="4.1.0">
 
     <!-- This sample+SDK requires Android SDK 10+. -->
     <uses-sdk
@@ -23,10 +23,10 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.SampleApp">
 
         <activity
-            android:name=".RFMSample"
+            android:name=".SampleMainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,19 +34,10 @@
             </intent-filter>
         </activity>
 
-        <!-- SimpleBanner activity : handles device rotation -->
         <activity
             android:name=".SimpleBanner"
             android:configChanges="orientation|screenSize"
             android:label="Simple Banner" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".TimerBasedBanner"
-            android:configChanges="orientation|screenSize"
-            android:label="Timer Ads" />
 
         <activity
             android:name=".InterstitialAd"
@@ -59,11 +50,28 @@
             android:label="Demo Ads in List" />
 
         <activity
-            android:name=".BannerOffScreen"
+            android:name=".CachedAd"
             android:configChanges="orientation|screenSize"
-            android:label="Demo Off Screen" />
+            android:label="Cached Ad" />
 
-        <activity android:name="com.rubicon.rfmsample.SamplePreferences" />
+        <activity
+            android:name=".TestCaseSettings"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name=".SampleSettings"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- com.rfm.sdk.HTMLBrowserView: required for RFM SDK -->
         <activity

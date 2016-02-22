@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/white_header" />
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/size_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/separator"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/size"
+                android:textColor="@color/seperator_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/ad_width_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:text="@string/width"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/ad_width_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/ad_width_textview"
+                    android:checked="false"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_width" />
+
+                <EditText
+                    android:id="@+id/ad_width_edittext"
+                    style="@style/TestCaseSettings.NumericEditText"
+                    android:layout_alignBaseline="@id/ad_width_checkbox"
+                    android:layout_toRightOf="@id/ad_width_checkbox"
+                    android:hint="@string/custom_width" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/default_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/item_shadow"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/ad_height_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:text="@string/height"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/ad_height_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/ad_height_textview"
+                    android:checked="false"
+                    android:text="@string/device_height" />
+
+                <EditText
+                    android:id="@+id/ad_height_edittext"
+                    style="@style/TestCaseSettings.NumericEditText"
+                    android:layout_alignBaseline="@id/ad_height_checkbox"
+                    android:layout_toRightOf="@id/ad_height_checkbox"
+                    android:hint="@string/custom_height" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/separator_test_settings"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/test_settings"
+            android:textColor="@color/seperator_background" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/test_mode_enabled_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/test_mode_enable"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/test_mode_switch"
+                style="@style/SettingsSwitchCompat" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/default_background" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/rfm_ad_id_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="bottom"
+                android:text="@string/test_ad_id"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/rfm_ad_id_editext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/rfm_ad_id_textview"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
+                android:hint="@string/ad_id_rfm_text"
+                android:maxLength="60"
+                android:padding="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fullscreen_switch_container"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/fullscreen_switch_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/full_screen"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/fullscreen_switch"
+                style="@style/SettingsSwitchCompat" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/default_background" />
+
+        <RelativeLayout
+            android:id="@+id/cached_ad_switch_container"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/item_shadow"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/cached_ad_switch_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/cached_ad"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/cached_ad_switch"
+                style="@style/SettingsSwitchCompat" />
+        </RelativeLayout>
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/default_background" />-->
+
+        <RelativeLayout
+            android:id="@+id/video_ad_switch_container"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/item_shadow"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/video_ad_switch_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/video_ad"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/video_ad_switch"
+                style="@style/SettingsSwitchCompat" />
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
