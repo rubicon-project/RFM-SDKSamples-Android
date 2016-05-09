@@ -113,7 +113,7 @@ public class SampleListAdapter extends ArrayAdapter<Object> {
                     listItemHolder.testDescription.setText(descriptionText);
                 }
                 if (listItemHolder.testNumber != null) {
-                    listItemHolder.testNumber.setText(rfmAd.getCount() + "");
+                    listItemHolder.testNumber.setText(String.valueOf(rfmAd.getCount()));
                 }
 
                 // return the created view

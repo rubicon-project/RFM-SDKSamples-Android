@@ -18,6 +18,7 @@
             app:expandedTitleMarginBottom="@dimen/backdrop_maintext_marginbottom"
             app:expandedTitleMarginEnd="74dp"
             app:expandedTitleMarginStart="58dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout

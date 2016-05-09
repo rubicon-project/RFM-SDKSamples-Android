@@ -174,9 +174,6 @@ public class InterstitialAd extends BaseActivity {
 					} else {
 						handleAdVisibility();
 					}
-
-					mNumberOfSuccess = mNumberOfSuccess + 1;
-					updateCountersView();
 				}
 
 				/*
@@ -191,6 +188,9 @@ public class InterstitialAd extends BaseActivity {
 
 					mNumberOfFailures = mNumberOfFailures + 1;
 					updateCountersView();
+//					if(mAdRequest.getVideoPlaybackUri() != null) {
+//						mAdView.setVisibility(View.VISIBLE);
+//					}
 				}
 
 				public void onInterstitialAdWillDismiss(RFMAdView adView) {
@@ -230,11 +230,15 @@ public class InterstitialAd extends BaseActivity {
 					}
 
 					appendTextToConsole("RFM Ad: Ad displayed ");
+					mNumberOfSuccess = mNumberOfSuccess + 1;
+					updateCountersView();
 				}
 
 				@Override
 				public void didFailedToDisplayAd(RFMAdView arg0, String arg1) {
 					appendTextToConsole("RFM Ad: Failed to display Ad ");
+					mNumberOfFailures = mNumberOfFailures + 1;
+					updateCountersView();
 				}
 			});
 		}
