@@ -57,6 +57,7 @@
     <string name="db_upload_success">SUCCESS: created test cases from json file!</string>
     <string name="db_upload_failure">FAILURE: failed to parse json file!</string>
     <string name="json_file_not_found">FAILURE: input json file not found!</string>
+    <string name="json_file_no_permission">FAILURE: failed to read input json due to missing permission!</string>
 
 
     <!-- Simple banner Activity -->

@@ -138,7 +138,7 @@ public class JsonToSQLLite {
 
                 final RFMAd rfmAd = new RFMAd(-1, testCaseName, appId, adType,
                         1, 0, locationType, "0", latitudeStr, longitudeStr,
-                        "", adWidth, adHeight, testMode, fullscreenMode, cachedAdMode, videoAdMode, adId, true, serverName, appId, pubId);
+                        "", adWidth, adHeight, testMode, fullscreenMode, cachedAdMode, videoAdMode, adId, true, serverName, appId, pubId, 0);
 
                 RFMAdDataSource rfmAdDataSource = RFMAdDataSource.getInstance(context);
                 rfmAdDataSource.createAdUnit(rfmAd);

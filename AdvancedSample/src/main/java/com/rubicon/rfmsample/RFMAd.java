@@ -29,6 +29,7 @@ public class RFMAd implements Comparable<RFMAd> {
     public static final String FULLSCREEN_MODE = "fullscreenMode";
     public static final String CACHED_AD_MODE = "cachedAdMode";
     public static final String VIDEO_AD_MODE = "videoAdMode";
+    public static final String COUNT = "count";
 
     private long mId;
     private String mTestCaseName;
@@ -121,7 +122,7 @@ public class RFMAd implements Comparable<RFMAd> {
                  int _refreshInterval, LocationType _locationType, String _locationPrecision, String _lat, String _long,
                  String _targetingKeyValue, int _adWidth, int _adHeight,
                  boolean _testMode, boolean _fullscreenMode, boolean _cachedAdMode, boolean _videoAdMode, String _adId, boolean _isCustom,
-                 String _rfmServer, String _appId, String _pubId) {
+                 String _rfmServer, String _appId, String _pubId, int _count) {
         mId = id;
         mTestCaseName = _testCaseName;
         mSiteId = _siteId;
@@ -141,6 +142,7 @@ public class RFMAd implements Comparable<RFMAd> {
         mVideoAdMode = _videoAdMode;
         mAdId = _adId;
         mIsCustom = _isCustom;
+        mCount = _count;
 
         mRFMServer = _rfmServer;
         mAppId = _appId;
@@ -284,6 +286,7 @@ public class RFMAd implements Comparable<RFMAd> {
         bundle.putBoolean(VIDEO_AD_MODE, mVideoAdMode);
         bundle.putString(AD_ID, mAdId);
         bundle.putBoolean(IS_CUSTOM, mIsCustom);
+        bundle.putInt(COUNT, mCount);
 
         // RFM Sample specific
         bundle.putString(RFM_SERVER, mRFMServer);
@@ -313,6 +316,7 @@ public class RFMAd implements Comparable<RFMAd> {
         final boolean videoAdMode = bundle.getBoolean(VIDEO_AD_MODE, false);
         final String adId = bundle.getString(AD_ID);
         final boolean isCustom = bundle.getBoolean(IS_CUSTOM, false);
+        final int count = bundle.getInt(COUNT);
 
         // RFM Sample specific
         final String rfmServer = bundle.getString(RFM_SERVER);
@@ -321,7 +325,7 @@ public class RFMAd implements Comparable<RFMAd> {
 
         final RFMAd rfmAd = new RFMAd(id, testCaseName, siteId, adType, refreshCount, refreshInterval,
                                 locationType, locationPrecision, lat, lng, targetingKeyValue, adWidth, adHeight, testMode,
-                                fullscreenMode, cachedAdMode, videoAdMode, adId, isCustom, rfmServer, appId, pubId);
+                                fullscreenMode, cachedAdMode, videoAdMode, adId, isCustom, rfmServer, appId, pubId, count);
         return rfmAd;
     }
 

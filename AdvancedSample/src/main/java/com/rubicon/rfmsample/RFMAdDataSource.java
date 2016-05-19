@@ -226,7 +226,7 @@ public class RFMAdDataSource {
 
         return new RFMAd(id, testCaseName, siteId, adType, refreshCount, refreshInterval,
                 RFMAd.LocationType.fromLocationName(locationType), locationPrecision, lat, lng, targetingKeyValue, adWidth, adHeight,
-                testMode == 1, fullscreenMode == 1, cachedAdMode == 1, videoAdMode == 1, adId, isCustom == 1, rfmServer, appId, pubId);
+                testMode == 1, fullscreenMode == 1, cachedAdMode == 1, videoAdMode == 1, adId, isCustom == 1, rfmServer, appId, pubId, 0);
     }
 
     public void cleanUp() {

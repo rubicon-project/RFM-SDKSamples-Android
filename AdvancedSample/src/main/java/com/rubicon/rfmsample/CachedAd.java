@@ -16,11 +16,10 @@ import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMAdViewListener;
 import com.rfm.sdk.RFMConstants;
-import com.rfm.sdk.ui.mediator.RFMBaseMediator;
 
 import java.util.HashMap;
 
-public class SimpleBanner extends BaseActivity {
+public class CachedAd extends BaseActivity {
 
     private final String LOG_TAG = "SimpleBanner";
     private TextView mDebugConsoleView;
@@ -81,20 +80,15 @@ public class SimpleBanner extends BaseActivity {
         Log.v(LOG_TAG, " Request Settings: ServerName: " + mAdRequest.getRFMServerName() + " PubId: "
                 + mAdRequest.getRFMPubId() + " AppId: " + mAdRequest.getRFMAppId());
 
-        //createBannerRequest();
         //mAdRequest.setVideoContent(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"), RFMConstants.RFM_VIDEO_PREROLL);
         // If the placement type is banner or interstitial
         // the publisher app can use this api to get a VAST ad
         // If the placement is in-stream this call is not required
         // the boolean argument is to stop the VAST ad video auto play behaviour
-        if(mVideoAdMode) {
-            mAdRequest.fetchVideoAds(true);
-        } else {
-            mAdRequest.fetchVideoAds(false);
-        }
+        //mAdRequest.setRFMAdAsVideo(true);
 
         // Request Ad
-        if (!mAdView.requestRFMAd(mAdRequest)) {
+        if (!mAdView.requestCachedRFMAd(mAdRequest)) {
             appendTextToConsole("ad request denied");
         } else {
             appendTextToConsole("ad request accepted, waiting for ad");
@@ -108,9 +102,9 @@ public class SimpleBanner extends BaseActivity {
      * Utility method to initialize RFM Ad request parameters
      */
     public void createBannerRequest() {
-        //if (mAdRequest == null) {
-        mAdRequest = new RFMAdRequest();
-       // }
+        if (mAdRequest == null) {
+            mAdRequest = new RFMAdRequest();
+        }
         if (mRfmAdTestMode) {
             mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
         }
@@ -160,10 +154,13 @@ public class SimpleBanner extends BaseActivity {
                  */
                 public void onAdReceived(RFMAdView adView) {
                     appendTextToConsole("RFM Ad: Received");
-                    mAdView.setVisibility(View.VISIBLE);
+                    CachedAd.this.mAdView.setVisibility(View.VISIBLE);
+                    try {
+                        adView.showCachedAd();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                    mNumberOfSuccess = mNumberOfSuccess + 1;
-                    updateCountersView();
                 }
 
                 /*
@@ -210,12 +207,14 @@ public class SimpleBanner extends BaseActivity {
 
                 @Override
                 public void didDisplayAd(RFMAdView arg0) {
-                    appendTextToConsole("RFM Ad: displayed ");
+                    appendTextToConsole("RFM Ad: Ad displayed");
+                    mNumberOfSuccess = mNumberOfSuccess + 1;
+                    updateCountersView();
                 }
 
                 @Override
                 public void didFailedToDisplayAd(RFMAdView arg0, String arg1) {
-                    appendTextToConsole("RFM Ad: Could not be displayed ");
+                    appendTextToConsole("RFM Ad: Could not be displayed");
                 }
 
             });

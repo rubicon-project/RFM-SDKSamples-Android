@@ -230,7 +230,6 @@ public class InfoListAdapter extends BaseAdapter {
 				public void onAdReceived(RFMAdView adView){
 					Log.v(LOG_TAG, "Ad Received");
 					mBanner.setVisibility(View.VISIBLE);
-					mBanner.displayAd();
 					InfoListAdapter.this.notifyDataSetChanged();
 				}
 
@@ -256,12 +255,12 @@ public class InfoListAdapter extends BaseAdapter {
 
 				@Override
 				public void didDisplayAd(RFMAdView arg0) {
-					Log.v(LOG_TAG, "RFM Ad: displayed ");
+					Log.v(LOG_TAG, "RFM Ad: Ad displayed");
 				}
 
 				@Override
 				public void didFailedToDisplayAd(RFMAdView arg0, String arg1) {
-					Log.v(LOG_TAG, "RFM Ad: Could not be displayed ");
+					Log.v(LOG_TAG, "RFM Ad: Could not be displayed");
 				}
 
 			});

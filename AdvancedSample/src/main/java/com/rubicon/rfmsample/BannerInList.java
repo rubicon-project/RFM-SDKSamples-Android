@@ -208,8 +208,8 @@ public class BannerInList extends BaseActivity {
 
 		@Override
 		public void didDisplayAd(RFMAdView arg0) {
-			Log.v(LOG_TAG, "RFM Ad: displayed ");
-			appendTextToConsole("RFM Ad: Displayed");
+			Log.v(LOG_TAG, "RFM Ad: Ad displayed");
+			appendTextToConsole("RFM Ad: Ad displayed");
 		}
 
 		@Override

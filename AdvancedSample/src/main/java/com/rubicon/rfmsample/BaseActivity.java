@@ -41,12 +41,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected String LOG_TAG = "BaseActivity";
 
     protected String mAdUnitTitle;
+    protected String rowNumber;
     protected long mAdUnitId;
     protected int mAdWidth;
     protected int mAdHeight;
@@ -94,6 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         RFMAd rfmAd = RFMAd.fromBundle(extras);
 
         mAdUnitTitle = rfmAd.getTestCaseName();
+        rowNumber = String.valueOf(rfmAd.getCount());
         mAdUnitId = rfmAd.getId();
         mRfmAdId = rfmAd.getAdId();
         mRfmServer = rfmAd.getRfmServer();
@@ -129,8 +130,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         stopTimer();
         unregisterReceiver(mReceiver);
 
-        
-		
     }
 
     @Override
@@ -195,7 +194,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(mAdUnitTitle);
+        collapsingToolbar.setTitle("(" + rowNumber + ") " + mAdUnitTitle);
 
         TextView backdropSubtext = (TextView) findViewById(R.id.backdrop_subtext);
         backdropSubtext.setText(getResources().getString(R.string.app_id, mRfmAppId));
