@@ -15,12 +15,13 @@ import com.rfm.sdk.ui.mediator.RFMCustomBanner;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.AdView;
+
 import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorFBANBanner implements RFMCustomBanner {
-    Context mContext;
-    RFMCustomBannerListener mListener;
+    private Context mContext;
+    private RFMCustomBannerListener mListener;
     private AdView mBannerAd;
     private static final String LOG_TAG = "RFMMediatorFBANBanner";
     private static final String PARAM_AD_ID = "placementId";
@@ -28,19 +29,19 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
     /**
      * Implementation for requesting Banner Ad from FBAN via RFM Custom event
      *
-     * @param context
-     * @param params , will have placementId, width, height and other parameters specified for Custom Event
-     * @param listener
+     * @param context  Activity context
+     * @param params   will have placementId, width, height and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      */
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomBannerListener listener) {
         mContext = context;
         mListener = listener;
-        if(createBannerAd(params)) {
+        if (createBannerAd(params)) {
             createAdListener();
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request FBAN Banner, placement Id missing");
             }
         }
@@ -52,10 +53,10 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
      */
     @Override
     public void reset() {
-        if(mBannerAd != null) {
+        if (mBannerAd != null) {
             mBannerAd.destroy();
             mBannerAd.setAdListener(null);
-            mContext=null;
+            mContext = null;
             Log.v(LOG_TAG, "Clean up FBAN Banner");
         }
     }
@@ -63,7 +64,7 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
@@ -73,17 +74,17 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
     /**
      * Utility method to create Banner Ad
      *
-     * @param params
+     * @param params adParams ad parameters
      * @return true for success / false for failure
      */
-    protected boolean createBannerAd(Map<String, String> params) {
+    private boolean createBannerAd(Map<String, String> params) {
         printAdParams(params);
         String placementId = null;
-        if(params != null) {
+        if (params != null) {
             placementId = params.get(PARAM_AD_ID);
         }
         Log.v(LOG_TAG, "Requesting Ad from FBAN with placement Id " + placementId);
-        if(placementId == null) {
+        if (placementId == null) {
             //return false;
             placementId = "116331455112023";
         }
@@ -101,14 +102,14 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
             public void onError(Ad ad, AdError adError) {
                 Log.d(LOG_TAG, "FB Banner Ad failed");
                 if (mListener != null) {
-                    mListener.onAdFailed("FB Banner failed with error code " + adError.getErrorCode()+ " and message "+adError.getErrorMessage());
+                    mListener.onAdFailed("FB Banner failed with error code " + adError.getErrorCode() + " and message " + adError.getErrorMessage());
                 }
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
                 Log.d(LOG_TAG, "FB Banner Ad loaded");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdLoaded(mBannerAd);
                 }
             }
@@ -116,7 +117,7 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
             @Override
             public void onAdClicked(Ad ad) {
                 Log.d(LOG_TAG, "FB Banner Ad clicked");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdClicked();
                 }
             }
@@ -137,21 +138,21 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
      *                width x height specified on RFMAdView will be available here
      * @return AdSize
      */
-    protected AdSize getAdSize(Map<String, String> params) {
+    private AdSize getAdSize(Map<String, String> params) {
         AdSize adSize = AdSize.BANNER_320_50;
-        if(params ==null) {
+        if (params == null) {
             return adSize;
         }
         try {
-            float adWidth=320;
-            float adHeight=50;
+            float adWidth = 320;
+            float adHeight = 50;
             if (params.containsKey(PARAM_WIDTH)) {
                 adWidth = Float.parseFloat(params.get(PARAM_WIDTH));
             }
             if (params.containsKey(PARAM_HEIGHT)) {
                 adHeight = Float.parseFloat(params.get(PARAM_HEIGHT));
             }
-            adSize = AdSize.fromWidthAndHeight((int)adWidth, (int)adHeight);
+            adSize = AdSize.fromWidthAndHeight((int) adWidth, (int) adHeight);
         } catch (Exception e) {
             e.printStackTrace();
             Log.v(LOG_TAG, "Failed to get valid size params from RFM SDK, requesting ad with default banner size 320 x 50");
@@ -162,14 +163,15 @@ public class RFMMediatorFBANBanner implements RFMCustomBanner {
 
     /**
      * Utility method to print all the parameters sent from RFM SDK
-     * @param params
+     *
+     * @param params ad parameters
      */
     protected void printAdParams(Map<String, String> params) {
-        if(params!= null) {
+        if (params != null) {
             Log.v(LOG_TAG, "Ad params from RFM Server");
             Set<String> keys = params.keySet();
-            for(String keyStr:keys) {
-                Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
             }
         } else {
             Log.v(LOG_TAG, "No additional Ad params available from RFM Server");

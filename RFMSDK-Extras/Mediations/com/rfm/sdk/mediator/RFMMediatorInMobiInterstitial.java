@@ -20,29 +20,29 @@ import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
-    Context mContext;
+    private Context mContext;
     private IMInterstitial mInterstitial;
-    RFMCustomInterstitialListener mListener;
+    private RFMCustomInterstitialListener mListener;
     private static final String LOG_TAG = "InMobiInterstitial";
     private static final String PARAM_AD_ID = "appId";
 
     /**
      * Implementation for requesting Interstitial Ad from Admob via RFM Custom event
      *
-     * @param context
-     * @param params , will have appId and other parameters specified for Custom Event
-     * @param listener
+     * @param context Activity context
+     * @param params  will have appId and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      **/
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomInterstitialListener listener) {
         Log.v("RFMMediatorInMobiBanner", " Requesting Ad from RFMMediatorInMobiBanner ");
         mContext = context;
         mListener = listener;
-        if(createInterstitial(params)) {
+        if (createInterstitial(params)) {
             createAdListener();
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request InMobi Interstitial, app Id missing");
             }
         }
@@ -54,10 +54,10 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
      */
     @Override
     public void reset() {
-        if(mInterstitial != null) {
+        if (mInterstitial != null) {
             mInterstitial.setIMInterstitialListener(null);
             mInterstitial.stopLoading();
-            mContext=null;
+            mContext = null;
             Log.v(LOG_TAG, "Clean up Inmobi Intersitital");
         }
     }
@@ -65,11 +65,11 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
-        if(mInterstitial != null) {
+        if (mInterstitial != null) {
             mInterstitial.show();
             return true;
         }
@@ -79,22 +79,22 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
     /**
      * Utility method to create Interstitial Ad
      *
-     * @param adParams
+     * @param adParams ad parameters
      * @return true for success / false for failure
      */
-    protected boolean createInterstitial(Map<String, String> adParams) {
+    private boolean createInterstitial(Map<String, String> adParams) {
         printAdParams(adParams);
         String appId = null;
-        if(adParams != null) {
+        if (adParams != null) {
             appId = adParams.get(PARAM_AD_ID);
         }
         Log.v(LOG_TAG, "Requesting Interstitial from Inmobi with Id " + appId);
-        if(appId == null) {
+        if (appId == null) {
             return false;
         }
-        
+
         InMobi.initialize(mContext, appId);
-        mInterstitial = new IMInterstitial((Activity)mContext, appId);
+        mInterstitial = new IMInterstitial((Activity) mContext, appId);
         return true;
     }
 
@@ -108,10 +108,11 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
             public void onLeaveApplication(IMInterstitial arg0) {
                 Log.v(LOG_TAG, "InMobiMediatior mInterstitial onLeaveApplication ");
             }
+
             @Override
             public void onDismissInterstitialScreen(IMInterstitial arg0) {
                 Log.v(LOG_TAG, "InMobiMediatior mInterstitial dismissed ");
-                if(mListener !=null) {
+                if (mListener != null) {
                     mListener.onAdClosed();
                 }
             }
@@ -119,17 +120,15 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
             @Override
             public void onInterstitialFailed(IMInterstitial arg0, IMErrorCode eCode) {
                 Log.v(LOG_TAG, "InMobiMediatior mInterstitial failed");
-                if(mListener != null) {
-                    mListener.onAdFailed("Failed to display Interstitial from InMobi, InMobi "+eCode);
+                if (mListener != null) {
+                    mListener.onAdFailed("Failed to display Interstitial from InMobi, InMobi " + eCode);
                 }
             }
 
             @Override
-            public void onInterstitialInteraction(IMInterstitial arg0,
-                                                  Map<String, String> arg1) {
-                // no-op
+            public void onInterstitialInteraction(IMInterstitial arg0, Map<String, String> arg1) {
                 Log.v(LOG_TAG, "InMobiMediatior mInterstitial on user Interaction");
-                if(mListener !=null) {
+                if (mListener != null) {
                     mListener.onAdClicked();
                 }
             }
@@ -137,7 +136,7 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
             @Override
             public void onInterstitialLoaded(IMInterstitial arg0) {
                 Log.v(LOG_TAG, "InMobiMediatior mInterstitial loaded");
-                if(mListener !=null) {
+                if (mListener != null) {
                     mListener.onAdLoaded();
                 }
 
@@ -146,7 +145,7 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
             @Override
             public void onShowInterstitialScreen(IMInterstitial arg0) {
                 Log.v(LOG_TAG, "InMobiMediatior Interstitial on onShowInterstitialScreen");
-                if(mListener !=null) {
+                if (mListener != null) {
                     mListener.onAdDisplayed();
                 }
             }
@@ -164,11 +163,11 @@ public class RFMMediatorInMobiInterstitial implements RFMCustomInterstitial {
      * Utility method to print all the parameters sent from RFM SDK
      */
     protected void printAdParams(Map<String, String> params) {
-        if(params!= null) {
+        if (params != null) {
             Log.v(LOG_TAG, "Ad params from RFM Server");
             Set<String> keys = params.keySet();
-            for(String keyStr:keys) {
-                Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
             }
         } else {
             Log.v(LOG_TAG, "No additional Ad params available from RFM Server");

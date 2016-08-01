@@ -18,28 +18,28 @@ import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
-    Context mContext;
-    RFMCustomInterstitialListener mListener;
-    MoPubInterstitial mInterstitial;
+    private Context mContext;
+    private RFMCustomInterstitialListener mListener;
+    private MoPubInterstitial mInterstitial;
     private static final String LOG_TAG = "MoPubInterstitial";
     private static final String PARAM_AD_ID = "adUnitId";
 
     /**
      * Implementation for requesting Interstitial Ad from Admob via RFM Custom event
      *
-     * @param context
-     * @param params , will have adUnitId and other parameters specified for Custom Event
-     * @param listener
+     * @param context  Activity context
+     * @param params   will have adUnitId and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      **/
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomInterstitialListener listener) {
         mContext = context;
         mListener = listener;
-        if(createInterstitialAd(params)) {
+        if (createInterstitialAd(params)) {
             createAdListener();
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request MoPub Interstitial, ad unit Id missing");
             }
         }
@@ -55,7 +55,7 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
             mInterstitial.setInterstitialAdListener(null);
             mInterstitial.destroy();
             mInterstitial = null;
-            mContext=null;
+            mContext = null;
             Log.v(LOG_TAG, "Clean up MoPub Intersitital");
         }
     }
@@ -63,11 +63,11 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
-        if(mInterstitial != null) {
+        if (mInterstitial != null) {
             return mInterstitial.show();
         }
         return false;
@@ -82,16 +82,16 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
     protected boolean createInterstitialAd(Map<String, String> adParams) {
         printAdParams(adParams);
         String adUnitId = null;
-        if(adParams != null) {
+        if (adParams != null) {
             adUnitId = adParams.get(PARAM_AD_ID);
         }
 
         Log.v(LOG_TAG, "Requesting Interstitial from MoPub with AdUnit Id " + adUnitId);
-        if(adUnitId == null) {
+        if (adUnitId == null) {
             return false;
         }
 
-        mInterstitial= new MoPubInterstitial((Activity)mContext, adUnitId);
+        mInterstitial = new MoPubInterstitial((Activity) mContext, adUnitId);
         mInterstitial.setKeywords(null);
         // Set location awareness and precision globally for your app:
 //        MoPub.setLocationAwareness(locationAwareness);
@@ -108,23 +108,23 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
             @Override
             public void onInterstitialLoaded(MoPubInterstitial mInterstitial) {
                 Log.i(LOG_TAG, "MoPub mInterstitial Ad loaded");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdLoaded();
                 }
             }
 
             @Override
             public void onInterstitialFailed(MoPubInterstitial mInterstitial, MoPubErrorCode errorCode) {
-                Log.i(LOG_TAG, "MoPub mInterstitial Ad fetch request failed with error:" +errorCode.toString());
-                if(mListener != null) {
-                    mListener.onAdFailed( "MoPub mInterstitial Media Ad fetch request failed with error:" +errorCode.toString());
+                Log.i(LOG_TAG, "MoPub mInterstitial Ad fetch request failed with error:" + errorCode.toString());
+                if (mListener != null) {
+                    mListener.onAdFailed("MoPub mInterstitial Media Ad fetch request failed with error:" + errorCode.toString());
                 }
             }
 
             @Override
             public void onInterstitialShown(MoPubInterstitial mInterstitial) {
                 Log.i(LOG_TAG, "MoPub mInterstitial Ad displayed");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdDisplayed();
                 }
             }
@@ -132,7 +132,7 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
             @Override
             public void onInterstitialClicked(MoPubInterstitial mInterstitial) {
                 Log.i(LOG_TAG, "MoPub mInterstitial Ad clicked");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdClicked();
                 }
             }
@@ -140,7 +140,7 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
             @Override
             public void onInterstitialDismissed(MoPubInterstitial mInterstitial) {
                 Log.i(LOG_TAG, "MoPub mInterstitial Ad closed");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.onAdClosed();
                 }
             }
@@ -158,11 +158,11 @@ public class RFMMediatorMoPubInterstitial implements RFMCustomInterstitial {
      * Utility method to print all the parameters sent from RFM SDK
      */
     protected void printAdParams(Map<String, String> params) {
-        if(params!= null) {
+        if (params != null) {
             Log.v(LOG_TAG, "Ad params from RFM Server");
             Set<String> keys = params.keySet();
-            for(String keyStr:keys) {
-                Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
             }
         } else {
             Log.v(LOG_TAG, "No additional Ad params available from RFM Server");

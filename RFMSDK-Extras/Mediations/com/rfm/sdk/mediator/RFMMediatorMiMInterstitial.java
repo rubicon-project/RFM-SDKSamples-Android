@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
-    Context mContext;
-    RFMCustomInterstitialListener mListener;
+    private Context mContext;
+    private RFMCustomInterstitialListener mListener;
     private static final String LOG_TAG = "MiMInterstitial";
     private static final String PARAM_AD_ID = "apId";
 
@@ -30,19 +30,19 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
     /**
      * Implementation for requesting Interstitial Ad from Millennial via RFM Custom event
      *
-     * @param context
-     * @param params , will have apId and other parameters specified for Custom Event
-     * @param listener
+     * @param context  Activity context
+     * @param params  will have apId and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      **/
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomInterstitialListener listener) {
         mContext = context;
         mListener = listener;
-        if(createInterstitialAd(params)) {
+        if (createInterstitialAd(params)) {
             createAdListener();
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request MIM Interstitial, App Id missing");
             }
         }
@@ -54,9 +54,9 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
      */
     @Override
     public void reset() {
-        if(interstitial != null) {
+        if (interstitial != null) {
             interstitial = null;
-            mContext=null;
+            mContext = null;
             Log.v(LOG_TAG, "Clean up MIM Intersitital");
         }
     }
@@ -64,11 +64,11 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
-        if(interstitial != null) {
+        if (interstitial != null) {
             return interstitial.display();
         }
         return false;
@@ -77,18 +77,18 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
     /**
      * Utility method to create Interstitial Ad
      *
-     * @param adParams
+     * @param adParams ad parameters
      * @return true for success / false for failure
      */
-    protected boolean createInterstitialAd(Map<String, String> adParams) {
+    private boolean createInterstitialAd(Map<String, String> adParams) {
         printAdParams(adParams);
         String apId = null;
-        if(adParams != null) {
-           apId = adParams.get(PARAM_AD_ID);
+        if (adParams != null) {
+            apId = adParams.get(PARAM_AD_ID);
         }
         //placement_id = "1111";
         Log.v(LOG_TAG, "Requesting Interstitial from Millennial Media with apId " + apId);
-        if(apId == null) {
+        if (apId == null) {
             return false;
         }
         // Create the adView
@@ -103,12 +103,12 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
      * Utility method to add call back listener
      */
     protected void createAdListener() {
-        if(interstitial != null) {
+        if (interstitial != null) {
             interstitial.setListener(new RequestListener() {
                 @Override
                 public void MMAdOverlayLaunched(MMAd mmAd) {
                     Log.i(LOG_TAG, "Millennial Media Ad (" + mmAd.getApid() + ") Overlay Launched");
-                    if(mListener != null) {
+                    if (mListener != null) {
                         mListener.onAdDisplayed();
                     }
                 }
@@ -116,7 +116,7 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
                 @Override
                 public void MMAdOverlayClosed(MMAd mmAd) {
                     Log.i(LOG_TAG, "Millennial Media Ad (" + mmAd.getApid() + ") Overlay closed");
-                    if(mListener != null) {
+                    if (mListener != null) {
                         mListener.onAdClosed();
                     }
 
@@ -130,7 +130,7 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
                 @Override
                 public void requestCompleted(MMAd mmAd) {
                     Log.i(LOG_TAG, "Millennial Media Ad (" + mmAd.getApid() + ") caching completed successfully.");
-                    if(mListener != null) {
+                    if (mListener != null) {
                         mListener.onAdLoaded();
                     }
                 }
@@ -138,7 +138,7 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
                 @Override
                 public void requestFailed(MMAd mmAd, MMException e) {
                     Log.i(LOG_TAG, String.format("Millennial Media Ad (" + mmAd.getApid() + ") fetch request failed with error: %d %s.", e.getCode(), e.getMessage()));
-                    if(mListener != null) {
+                    if (mListener != null) {
                         mListener.onAdFailed(String.format("Millennial Media Ad (" + mmAd.getApid() + ") fetch request failed with error: %d %s.", e.getCode(), e.getMessage()));
                     }
                 }
@@ -146,7 +146,7 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
                 @Override
                 public void onSingleTap(MMAd mmAd) {
                     Log.i(LOG_TAG, "Millennial Media Ad (" + mmAd.getApid() + ") single tap");
-                    if(mListener !=null) {
+                    if (mListener != null) {
                         mListener.onAdClicked();
                     }
                 }
@@ -165,11 +165,11 @@ public class RFMMediatorMiMInterstitial implements RFMCustomInterstitial {
      * Utility method to print all the parameters sent from RFM SDK
      */
     protected void printAdParams(Map<String, String> params) {
-        if(params!= null) {
+        if (params != null) {
             Log.v(LOG_TAG, "Ad params from RFM Server");
             Set<String> keys = params.keySet();
-            for(String keyStr:keys) {
-                Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
             }
         } else {
             Log.v(LOG_TAG, "No additional Ad params available from RFM Server");
