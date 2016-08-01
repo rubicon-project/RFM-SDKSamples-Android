@@ -10,26 +10,26 @@ import android.os.Bundle;
 
 public class RFMAd implements Comparable<RFMAd> {
 
-    public static final String ID = "id";
-    public static final String TEST_CASE_NAME = "testCaseName";
-    public static final String SITE_ID = "siteId";
-    public static final String AD_TYPE = "adType";
-    public static final String REFRESH_COUNT = "refreshCount";
-    public static final String REFRESH_INTERVAL = "refreshInterval";
-    public static final String LOCATION_TYPE = "locationType";
-    public static final String LOCATION_PRECISION = "locationPrecision";
-    public static final String LAT = "latitude";
-    public static final String LONG = "longitude";
-    public static final String TARGETING_KEY_VALUE = "targetingKeyValue";
-    public static final String AD_WIDTH = "adWidth";
-    public static final String AD_HEIGHT = "adHeight";
-    public static final String TEST_MODE = "testMode";
-    public static final String AD_ID = "adId";
-    public static final String IS_CUSTOM = "isCustom";
-    public static final String FULLSCREEN_MODE = "fullscreenMode";
-    public static final String CACHED_AD_MODE = "cachedAdMode";
-    public static final String VIDEO_AD_MODE = "videoAdMode";
-    public static final String COUNT = "count";
+    static final String ID = "id";
+    static final String TEST_CASE_NAME = "testCaseName";
+    static final String SITE_ID = "siteId";
+    static final String AD_TYPE = "adType";
+    static final String REFRESH_COUNT = "refreshCount";
+    static final String REFRESH_INTERVAL = "refreshInterval";
+    static final String LOCATION_TYPE = "locationType";
+    static final String LOCATION_PRECISION = "locationPrecision";
+    static final String LAT = "latitude";
+    static final String LONG = "longitude";
+    static final String TARGETING_KEY_VALUE = "targetingKeyValue";
+    static final String AD_WIDTH = "adWidth";
+    static final String AD_HEIGHT = "adHeight";
+    static final String TEST_MODE = "testMode";
+    static final String AD_ID = "adId";
+    static final String IS_CUSTOM = "isCustom";
+    static final String FULLSCREEN_MODE = "fullscreenMode";
+    static final String CACHED_AD_MODE = "cachedAdMode";
+    static final String VIDEO_AD_MODE = "videoAdMode";
+    static final String COUNT = "count";
 
     private long mId;
     private String mTestCaseName;
@@ -53,9 +53,9 @@ public class RFMAd implements Comparable<RFMAd> {
     private int mCount = 0;
 
     // RFM Sample specific
-    public static final String RFM_SERVER = "rfmServer";
-    public static final String APP_ID = "appId";
-    public static final String PUB_ID = "pubId";
+    static final String RFM_SERVER = "rfmServer";
+    static final String APP_ID = "appId";
+    static final String PUB_ID = "pubId";
     private String mRFMServer;
     private String mAppId;
     private String mPubId;
@@ -67,7 +67,7 @@ public class RFMAd implements Comparable<RFMAd> {
         GPS_BASED ("GPS_BASED");
 
         private final String locType;
-        private LocationType(final String _locType) {
+        LocationType(final String _locType) {
             this.locType = _locType;
         }
 
@@ -87,9 +87,10 @@ public class RFMAd implements Comparable<RFMAd> {
 
     enum AdType {
         BANNER ("Banner", SimpleBanner.class),
-        INTERSTITIAL ("Interstitial", InterstitialAd.class),
+        INTERSTITIAL ("Interstitial", FullScreenInterstitialAd.class),
         BANNER_IN_LIST ("BannerInList", BannerInList.class),
-        CACHED_AD ("CachedAd", CachedAd.class);
+        CACHED_AD ("CachedAd", CachedAd.class),
+        REWARDED_VIDEO ("RewardedVideo", RewardedVideoAd.class);
 
         String getName() {
             return name;
@@ -149,43 +150,43 @@ public class RFMAd implements Comparable<RFMAd> {
         mPubId = _pubId;
     }
 
-    public Class<? extends Activity> getActivityClass() {
+    Class<? extends Activity> getActivityClass() {
         return mAdType.getActivityClass();
     }
 
-    public String getTestCaseName() {
+    String getTestCaseName() {
         return mTestCaseName;
     }
 
-    public String getSiteId() {
+    String getSiteId() {
         return mSiteId;
     }
 
-    public int getRefreshCount() {
+    int getRefreshCount() {
         return mRefreshCount;
     }
 
-    public int getRefreshInterval() {
+    int getRefreshInterval() {
         return mRefreshInterval;
     }
 
-    public LocationType getLocationType() {
+    LocationType getLocationType() {
         return mLocationType;
     }
 
-    public String getLocationPrecision() {
+    String getLocationPrecision() {
         return mLocationPrecision;
     }
 
-    public String getLat() {
+    String getLat() {
         return mLat;
     }
 
-    public String getLong() {
+    String getLong() {
         return mLong;
     }
 
-    public String getTargetingKeyValue() {
+    String getTargetingKeyValue() {
         return mTargetingKeyValue;
     }
 
@@ -193,59 +194,61 @@ public class RFMAd implements Comparable<RFMAd> {
         return mAdWidth;
     }
 
-    public int getAdHeight() {
+    int getAdHeight() {
         return mAdHeight;
     }
 
-    public boolean getTestMode() {
+    boolean getTestMode() {
         return mTestMode;
     }
 
-    public boolean getFullscreenMode() {
+    boolean getFullscreenMode() {
         return mFullscreenMode;
     }
 
-    public boolean getCachedAdMode() {
+    boolean getCachedAdMode() {
         return mCachedAdMode;
     }
 
-    public boolean getVideoAdMode() {
+    boolean getVideoAdMode() {
         return mVideoAdMode;
     }
 
-    public String getAdId() {
+    String getAdId() {
         return mAdId;
     }
 
-    public boolean getAdIsCustom() {
+    boolean getAdIsCustom() {
         return mIsCustom;
     }
 
 
-    public String getRfmServer() {
+    String getRfmServer() {
         return mRFMServer;
     }
-    public String getAppId() {
+
+    String getAppId() {
         return mAppId;
     }
-    public String getPubId() {
+
+    String getPubId() {
         return mPubId;
     }
 
-    public AdType getAdType() {
+    AdType getAdType() {
         return mAdType;
     }
 
-    public String getAdTypeName() {
+    String getAdTypeName() {
         return mAdType.getActivityClass().getName();
     }
 
-    public long getId() {
+    long getId() {
         return mId;
     }
 
 
-    public String getActivityClassName() {
+    String getActivityClassName() {
         return mAdType.getActivityClass().getName();
     }
 
@@ -257,15 +260,15 @@ public class RFMAd implements Comparable<RFMAd> {
         return mIsCustom;
     }
 
-    public int getCount() {
+    int getCount() {
         return mCount;
     }
 
-    public void setCount(int count) {
+    void setCount(int count) {
         mCount = count;
     }
 
-    public Bundle toBundle() {
+    Bundle toBundle() {
         final Bundle bundle = new Bundle();
         bundle.putLong(ID, mId);
         bundle.putString(TEST_CASE_NAME, mTestCaseName);
@@ -296,7 +299,7 @@ public class RFMAd implements Comparable<RFMAd> {
         return bundle;
     }
 
-    public static RFMAd fromBundle(final Bundle bundle) {
+    static RFMAd fromBundle(final Bundle bundle) {
         final Long id = bundle.getLong(ID, -1L);
         final String testCaseName = bundle.getString(TEST_CASE_NAME);
         final String siteId = bundle.getString(SITE_ID);

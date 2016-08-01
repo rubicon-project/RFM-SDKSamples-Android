@@ -30,13 +30,10 @@ public class CachedAd extends BaseActivity {
         setContentView(R.layout.demosimplebanner);
 
         mDebugConsoleView = (TextView) findViewById(R.id.log_text);
-        mDebugConsoleView.setBackgroundColor(Color.WHITE);
-        mDebugConsoleView.setMovementMethod(new ScrollingMovementMethod());
-
-        HashMap<String, String> updatedMediator = new HashMap<String, String>();
-        updatedMediator.put("adm", "com.rfm.sdk.extras.AdmobApiMediator");
-        updatedMediator.put("dfp", "com.rfm.sdk.extras.DFPApiMediator");
-        //RFMBaseMediator.updateMediatorHashMap(updatedMediator);
+        if (mDebugConsoleView != null) {
+            mDebugConsoleView.setBackgroundColor(Color.WHITE);
+            mDebugConsoleView.setMovementMethod(new ScrollingMovementMethod());
+        }
 
         if (mAdView == null) {
             mAdView = (RFMAdView) findViewById(R.id.bannerviewone);
@@ -80,13 +77,6 @@ public class CachedAd extends BaseActivity {
         Log.v(LOG_TAG, " Request Settings: ServerName: " + mAdRequest.getRFMServerName() + " PubId: "
                 + mAdRequest.getRFMPubId() + " AppId: " + mAdRequest.getRFMAppId());
 
-        //mAdRequest.setVideoContent(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"), RFMConstants.RFM_VIDEO_PREROLL);
-        // If the placement type is banner or interstitial
-        // the publisher app can use this api to get a VAST ad
-        // If the placement is in-stream this call is not required
-        // the boolean argument is to stop the VAST ad video auto play behaviour
-        //mAdRequest.setRFMAdAsVideo(true);
-
         // Request Ad
         if (!mAdView.requestCachedRFMAd(mAdRequest)) {
             appendTextToConsole("ad request denied");
@@ -101,7 +91,7 @@ public class CachedAd extends BaseActivity {
     /**
      * Utility method to initialize RFM Ad request parameters
      */
-    public void createBannerRequest() {
+    private void createBannerRequest() {
         if (mAdRequest == null) {
             mAdRequest = new RFMAdRequest();
         }
@@ -119,7 +109,7 @@ public class CachedAd extends BaseActivity {
     /**
      * Utility method to set RFM AdView listener
      */
-    public void setRFMAdViewListener() {
+    private void setRFMAdViewListener() {
         // Optional listener for RFMAd status
         if (mAdView != null) {
             mAdView.setRFMAdViewListener(new RFMAdViewListener() {

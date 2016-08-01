@@ -28,16 +28,16 @@ import java.util.List;
  * Class built on base adapter for providing data to be displayed in list items.
  * Each list item view has a title and description for the demo test case.
  */
-public class InfoListAdapter extends BaseAdapter {
+class InfoListAdapter extends BaseAdapter {
 
-	Activity context;
-	String description = "Rubicon Project ";
-	String adSizeStr;
-	boolean firstTimeAdrequested = false;
+	private Activity context;
+	private String description = "Rubicon Project ";
+	private String adSizeStr;
+	private boolean firstTimeAdrequested = false;
 	private RFMAdView mBanner;
 	private RFMAdRequest mAdRequest;
 	private static String LOG_TAG = "InfoListAdapter";
-	protected RFMAdViewListener adViewListener;
+	private RFMAdViewListener adViewListener;
 	private int TYPE_NOT_AD = 0;
 	private int TYPE_AD = 1;
 	static int AD_ROW_1 = 2;
@@ -46,10 +46,9 @@ public class InfoListAdapter extends BaseAdapter {
 	static int AD_ROW_4 = 50;
 	static int AD_ROW_5 = 70;
 	static int AD_ROW_6 = 90;
-	AdViewHolder adViewHolder;
 	private List<String> data = new ArrayList<>();
 
-	public InfoListAdapter(Activity context, int listSize, String adSizeStrVal, RFMAdViewListener _adViewListener, RFMAdRequest _adRequest) {
+	InfoListAdapter(Activity context, int listSize, String adSizeStrVal, RFMAdViewListener _adViewListener, RFMAdRequest _adRequest) {
 		super();
 
 		for (int i=0; i < listSize; i++)
@@ -65,25 +64,16 @@ public class InfoListAdapter extends BaseAdapter {
 		adViewListener = _adViewListener;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getCount()
-	 */
 	@Override
 	public int getCount() {
 		return data.size();
 	}
 
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getItem(int)
-	 */
 	@Override
 	public Object getItem(int arg0) {
 		return data.get(arg0);
 	}
 
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getItemId(int)
-	 */
 	@Override
 	public long getItemId(int position) {
 		return 0;
@@ -106,25 +96,21 @@ public class InfoListAdapter extends BaseAdapter {
 	}
 
 	private static class NonAdViewHolder {
-		public TextView mainText;
-		public TextView descriptionText;
+		TextView mainText;
+		TextView descriptionText;
 	}
 
 	private static class AdViewHolder {
-		public RFMAdView rfmAdView;
+		RFMAdView rfmAdView;
 	}
 
-	/* (non-Javadoc)
- 	* @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
- 	*/
 	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		int viewType = this.getItemViewType(position);
 
-		switch(viewType)
-		{
+		switch(viewType) {
 			// non ad type publisher list item
 			case 0:
 

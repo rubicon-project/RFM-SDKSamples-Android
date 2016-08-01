@@ -75,6 +75,7 @@
     <string name="clearConsole">Clear Console</string>
     <string name="defaultConsoleText">Sample App Ad Status \n--------------------------------\n</string>
 
-    <string name="displayad">Display Cached Ad</string>
+    <string name="displaycachedad">Display Cached Ad</string>
+    <string name="displayad">Display Ad</string>
 
 </resources>

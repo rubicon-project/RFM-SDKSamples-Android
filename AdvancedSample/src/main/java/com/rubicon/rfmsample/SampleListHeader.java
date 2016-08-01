@@ -5,14 +5,14 @@
 
 package com.rubicon.rfmsample;
 
-public class SampleListHeader {
+class SampleListHeader {
     private final String name;
 
-    public SampleListHeader(String name) {
+    SampleListHeader(String name) {
         this.name = name;
     }
 
-    public String title() {
+    String title() {
         return name;
     }
 

@@ -16,9 +16,6 @@ import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMAdViewListener;
 import com.rfm.sdk.RFMConstants;
-import com.rfm.sdk.ui.mediator.RFMBaseMediator;
-
-import java.util.HashMap;
 
 public class SimpleBanner extends BaseActivity {
 
@@ -34,18 +31,14 @@ public class SimpleBanner extends BaseActivity {
         mDebugConsoleView.setBackgroundColor(Color.WHITE);
         mDebugConsoleView.setMovementMethod(new ScrollingMovementMethod());
 
-        HashMap<String, String> updatedMediator = new HashMap<String, String>();
-        updatedMediator.put("adm", "com.rfm.sdk.extras.AdmobApiMediator");
-        updatedMediator.put("dfp", "com.rfm.sdk.extras.DFPApiMediator");
-        //RFMBaseMediator.updateMediatorHashMap(updatedMediator);
-
         if (mAdView == null) {
             mAdView = (RFMAdView) findViewById(R.id.bannerviewone);
-            // This is to enable HW acceleration for Videos
-            mAdView.enableHWAcceleration(true);
-
-            //UI control for Sample App
-            mAdView.setBackgroundColor(Color.TRANSPARENT);
+            if (mAdView != null) {
+                // This is to enable HW acceleration for Videos
+                mAdView.enableHWAcceleration(true);
+               //UI control for Sample App
+                mAdView.setBackgroundColor(Color.TRANSPARENT);
+            }
         }
 
         // Create Banner Ad Request
@@ -82,12 +75,8 @@ public class SimpleBanner extends BaseActivity {
                 + mAdRequest.getRFMPubId() + " AppId: " + mAdRequest.getRFMAppId());
 
         //createBannerRequest();
-        //mAdRequest.setVideoContent(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"), RFMConstants.RFM_VIDEO_PREROLL);
-        // If the placement type is banner or interstitial
-        // the publisher app can use this api to get a VAST ad
-        // If the placement is in-stream this call is not required
-        // the boolean argument is to stop the VAST ad video auto play behaviour
-        if(mVideoAdMode) {
+
+        if (mVideoAdMode) {
             mAdRequest.fetchVideoAds(true);
         } else {
             mAdRequest.fetchVideoAds(false);
@@ -107,10 +96,10 @@ public class SimpleBanner extends BaseActivity {
     /**
      * Utility method to initialize RFM Ad request parameters
      */
-    public void createBannerRequest() {
+    private void createBannerRequest() {
         //if (mAdRequest == null) {
         mAdRequest = new RFMAdRequest();
-       // }
+        // }
         if (mRfmAdTestMode) {
             mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
         }
@@ -125,7 +114,7 @@ public class SimpleBanner extends BaseActivity {
     /**
      * Utility method to set RFM AdView listener
      */
-    public void setRFMAdViewListener() {
+    private void setRFMAdViewListener() {
         // Optional listener for RFMAd status
         if (mAdView != null) {
             mAdView.setRFMAdViewListener(new RFMAdViewListener() {

@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rubicon.rfmsample"
-    android:versionCode="28"
-    android:versionName="4.2.0">
+    android:versionCode="29"
+    android:versionName="5.0.0">
 
     <!-- This sample+SDK requires Android SDK 10+. -->
     <uses-sdk
@@ -13,6 +13,7 @@
     <!-- Required permissions for RFM Ad SDK -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Optional permissions, needed to only by apps which compute device location. -->
@@ -40,9 +41,9 @@
             android:label="Simple Banner" />
 
         <activity
-            android:name=".InterstitialAd"
+            android:name=".FullScreenInterstitialAd"
             android:configChanges="orientation|screenSize"
-            android:label="Interstitial Ad" />
+            android:label="FullScreenInterstitial Ad" />
 
         <activity
             android:name=".BannerInList"
@@ -53,6 +54,11 @@
             android:name=".CachedAd"
             android:configChanges="orientation|screenSize"
             android:label="Cached Ad" />
+
+        <activity
+            android:name=".RewardedVideoAd"
+            android:configChanges="orientation|screenSize"
+            android:label="RewardedVideoAd" />
 
         <activity
             android:name=".TestCaseSettings"
@@ -83,6 +89,10 @@
             android:name="com.rfm.sdk.MraidVideoPlayerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
+        <!-- com.rfm.sdk.RFMActivity: required for RFM SDK to serve Mraid, VAST & Rewarded Video Interstitial ads -->
+        <activity android:name="com.rfm.sdk.RFMActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
         <!-- com.google.ads.AdActivity: required for Google Ads -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -95,8 +105,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity android:name="com.millennialmedia.android.MMActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            />
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
 
         <!--Activities dependency for MoPub -->
         <activity android:name="com.mopub.mobileads.MoPubActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>

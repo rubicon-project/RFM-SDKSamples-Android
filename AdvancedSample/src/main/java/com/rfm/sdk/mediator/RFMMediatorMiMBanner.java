@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class RFMMediatorMiMBanner implements RFMCustomBanner {
     private Context mContext;
-    RFMCustomBannerListener mListener;
+    private RFMCustomBannerListener mListener;
     private static final int IAB_LEADERBOARD_WIDTH = 728;
     private static final int IAB_LEADERBOARD_HEIGHT = 90;
 
@@ -40,9 +40,9 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
     /**
      * Implementation for requesting Banner Ad from Millennial SDK via RFM Custom event
      *
-     * @param context
-     * @param params , will have apId, width, height and other parameters specified for Custom Event
-     * @param listener
+     * @param context  Activity context
+     * @param params   will have apId, width, height and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      */
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomBannerListener listener) {
@@ -50,11 +50,11 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
         mContext = context;
         mListener = listener;
 
-        if(createBannerAd(params)) {
+        if (createBannerAd(params)) {
             createAdListener();
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request MIM Banner Ad, app Id missing");
             }
         }
@@ -66,10 +66,10 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
      */
     @Override
     public void reset() {
-        if(mAdView != null) {
+        if (mAdView != null) {
             mAdView.destroyDrawingCache();
             mAdView = null;
-            mContext=null;
+            mContext = null;
             Log.v(LOG_TAG, "Clean up MIM Banner");
         }
     }
@@ -77,12 +77,12 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
-        if(mAdView != null) {
-            if(mAdView.isShown()) {
+        if (mAdView != null) {
+            if (mAdView.isShown()) {
                 Log.v(LOG_TAG, " MIM - Mobi ad shown.");
                 return true;
             }
@@ -93,19 +93,19 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
     /**
      * Utility method to create Banner Ad
      *
-     * @param adParams
+     * @param adParams ad parameters
      * @return true for success / false for failure
      */
     private boolean createBannerAd(Map<String, String> adParams) {
         printAdParams(adParams);
         String apId = null;
-        if(adParams != null) {
+        if (adParams != null) {
             apId = adParams.get(PARAM_AD_ID);
 
-            if(apId == null) {
+            if (apId == null) {
                 return false;
             }
-     }
+        }
 
         /******** Millennial Media Ad View Integration ********/
         // Create the mAdView
@@ -115,9 +115,9 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
 
         // (Highly Recommended) Set the id to preserve your ad on configuration changes. Save Battery!
         // Each MMAdView you give requires a unique id.
-       // int defaultAdId = MMSDK.getDefaultAdId();
-       // Log.v(LOG_TAG, " Setting ApId = "+defaultAdId);
-       // mAdView.setId(defaultAdId);
+        // int defaultAdId = MMSDK.getDefaultAdId();
+        // Log.v(LOG_TAG, " Setting ApId = "+defaultAdId);
+        // mAdView.setId(defaultAdId);
         setAdSize(adParams);
 
         // (Optional/Recommended) Set meta data (will be applied to subsequent ad requests)
@@ -199,10 +199,10 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
      * @param params, RFM SDK will always include 'width' and 'height' in params
      *                width x height specified on RFMAdView will be available here
      */
-    private void setAdSize(Map<String, String> params){
+    private void setAdSize(Map<String, String> params) {
         float width = 320;
         float height = 50;
-        if(params !=null) {
+        if (params != null) {
             try {
                 if (params.containsKey(PARAM_WIDTH)) {
                     width = Float.parseFloat(params.get(PARAM_WIDTH));
@@ -214,7 +214,7 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
                 e.printStackTrace();
                 Log.v(LOG_TAG, "Failed to get valid size params from RFM SDK, requesting ad with default banner size 320 x 50");
                 width = 320;
-                height=50;
+                height = 50;
             }
         }
 
@@ -243,15 +243,13 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
     }
 
     // Determine if the requested adWidth can fit on the screen.
-    protected boolean canFit(int adWidth)
-    {
+    protected boolean canFit(int adWidth) {
         int adWidthPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, mContext.getResources().getDisplayMetrics());
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         return metrics.widthPixels >= adWidthPx;
     }
 
-    protected Map<String, String> createMetaData()
-    {
+    protected Map<String, String> createMetaData() {
         Map<String, String> metaData = new HashMap<>();
         metaData.put(MMRequest.KEY_AGE, "45");
         metaData.put(MMRequest.KEY_GENDER, MMRequest.GENDER_MALE);
@@ -267,18 +265,19 @@ public class RFMMediatorMiMBanner implements RFMCustomBanner {
 
     /**
      * Utility method to print parameters sent from RFM SDK
-     * @param params
+     *
+     * @param params ad parameters
      */
     protected void printAdParams(Map<String, String> params) {
-      if(params!= null) {
-          Log.v(LOG_TAG, "Ad params from RFM Server");
-          Set<String> keys = params.keySet();
-          for(String keyStr:keys) {
-              Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
-          }
-      } else {
-          Log.v(LOG_TAG, "No additional Ad params available from RFM Server");
-      }
+        if (params != null) {
+            Log.v(LOG_TAG, "Ad params from RFM Server");
+            Set<String> keys = params.keySet();
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
+            }
+        } else {
+            Log.v(LOG_TAG, "No additional Ad params available from RFM Server");
+        }
     }
 
 }

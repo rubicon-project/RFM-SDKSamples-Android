@@ -15,11 +15,11 @@ import java.io.FileReader;
 
 import static com.rubicon.rfmsample.RFMAd.AdType;
 
-public class JsonToSQLLite {
+class JsonToSQLLite {
 
     private static final String LINE_FEED = "\r\n";
 
-    public static String readFileToString(String filename) {
+    static String readFileToString(String filename) {
 
         String everything = "";
         try {
@@ -46,7 +46,7 @@ public class JsonToSQLLite {
 
     }
 
-    public static boolean saveToDB(Context context, String jsonData) {
+    static boolean saveToDB(Context context, String jsonData) {
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
             JSONArray jsonArray = jsonObject.getJSONArray("testcases");
@@ -145,7 +145,7 @@ public class JsonToSQLLite {
 
             }
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

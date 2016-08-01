@@ -8,9 +8,9 @@ package com.rubicon.rfmsample;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class SwipeDetector implements View.OnTouchListener {
+class SwipeDetector implements View.OnTouchListener {
 
-    public static enum Action {
+    private enum Action {
         LR, // Left to Right
         RL, // Right to Left
         TB, // Top to bottom
@@ -25,7 +25,7 @@ public class SwipeDetector implements View.OnTouchListener {
     private float downX, downY, upX, upY;
     private Action mSwipeDetected = Action.None;
 
-    public boolean swipeDetected() {
+    boolean swipeDetected() {
         return mSwipeDetected != Action.None;
     }
 
@@ -63,7 +63,6 @@ public class SwipeDetector implements View.OnTouchListener {
                         return true;
                     }
                 } else
-
                     // vertical swipe detection
                     if (Math.abs(deltaY) > VERTICAL_MIN_DISTANCE) {
                         // top or down

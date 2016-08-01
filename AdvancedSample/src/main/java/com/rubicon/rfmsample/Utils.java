@@ -9,7 +9,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 
-public class Utils {
+class Utils {
 
     static void snackbar(Activity activity, String msg, boolean positive) {
         Snackbar.make(activity.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)

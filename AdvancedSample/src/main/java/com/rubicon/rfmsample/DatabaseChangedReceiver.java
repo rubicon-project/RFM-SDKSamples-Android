@@ -11,7 +11,7 @@ import android.content.Intent;
 
 public class DatabaseChangedReceiver extends BroadcastReceiver {
 
-    public static String ACTION_DATABASE_CHANGED = "com.rfm.mopubadaptersample.DATABASE_CHANGED";
+    static String ACTION_DATABASE_CHANGED = "com.rfm.mopubadaptersample.DATABASE_CHANGED";
 
     @Override
     public void onReceive(Context context, Intent intent) {

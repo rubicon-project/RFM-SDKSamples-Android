@@ -31,15 +31,19 @@ public class AboutActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_black);
         }
 
-        TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(getResources().getText(R.string.about));
+        if (toolbar != null) {
+            TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            toolbarTitle.setText(getResources().getText(R.string.about));
+        }
 
         RFMAdView mRFMBannerAdView = new RFMAdView(mContext);
         TextView rfmSdkVersionTextView = (TextView) findViewById(R.id.rfm_sdk_version_textview);
-        rfmSdkVersionTextView.setText(mRFMBannerAdView.getSDKVersion());
+        if (rfmSdkVersionTextView != null)
+            rfmSdkVersionTextView.setText(mRFMBannerAdView.getSDKVersion());
 
         TextView sampleAppVersionTextView = (TextView) findViewById(R.id.sample_version_textview);
-        sampleAppVersionTextView.setText(mRFMBannerAdView.getSDKVersion());
+        if (sampleAppVersionTextView != null)
+            sampleAppVersionTextView.setText(mRFMBannerAdView.getSDKVersion());
     }
 
     @Override
