@@ -10,49 +10,49 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 
-public class SimpleGestureFilter extends SimpleOnGestureListener{
+public class SimpleGestureFilter extends SimpleOnGestureListener {
 
-    public final static int SWIPE_UP    = 1;
-    public final static int SWIPE_DOWN  = 2;
-    public final static int SWIPE_LEFT  = 3;
-    public final static int SWIPE_RIGHT = 4;
+    private final static int SWIPE_UP = 1;
+    private final static int SWIPE_DOWN = 2;
+    private final static int SWIPE_LEFT = 3;
+    private final static int SWIPE_RIGHT = 4;
 
-    public final static int MODE_SOLID   = 1;
-    public final static int MODE_DYNAMIC = 2;
+    private final static int MODE_SOLID = 1;
+    private final static int MODE_DYNAMIC = 2;
 
-    private final static int ACTION_FAKE = -13; //just an unlikely number
+    private final static int ACTION_FAKE = -13;
     private int swipe_Min_Distance = 100;
     private int swipe_Max_Distance = 650;
     private int swipe_Min_Velocity = 100;
 
-    private int mode             = MODE_DYNAMIC;
-    private boolean running      = true;
+    private int mode = MODE_DYNAMIC;
+    private boolean running = true;
     private boolean tapIndicator = false;
 
     private Activity context;
     private GestureDetector detector;
     private SimpleGestureListener listener;
 
-    public SimpleGestureFilter(Activity context,SimpleGestureListener sgl) {
+    public SimpleGestureFilter(Activity context, SimpleGestureListener sgl) {
         this.context = context;
         this.detector = new GestureDetector(context, this);
         this.listener = sgl;
     }
 
-    public void onTouchEvent(MotionEvent event){
-        if(!this.running)
+    public void onTouchEvent(MotionEvent event) {
+        if (!this.running)
             return;
 
         boolean result = this.detector.onTouchEvent(event);
 
-        if(this.mode == MODE_SOLID)
+        if (this.mode == MODE_SOLID)
             event.setAction(MotionEvent.ACTION_CANCEL);
         else if (this.mode == MODE_DYNAMIC) {
-            if(event.getAction() == ACTION_FAKE)
+            if (event.getAction() == ACTION_FAKE)
                 event.setAction(MotionEvent.ACTION_UP);
             else if (result)
                 event.setAction(MotionEvent.ACTION_CANCEL);
-            else if(this.tapIndicator){
+            else if (this.tapIndicator) {
                 event.setAction(MotionEvent.ACTION_DOWN);
                 this.tapIndicator = false;
             }
@@ -65,23 +65,22 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
         final float xDistance = Math.abs(e1.getX() - e2.getX());
         final float yDistance = Math.abs(e1.getY() - e2.getY());
 
-        if(xDistance > this.swipe_Max_Distance || yDistance > this.swipe_Max_Distance)
+        if (xDistance > this.swipe_Max_Distance || yDistance > this.swipe_Max_Distance)
             return false;
 
         velocityX = Math.abs(velocityX);
         velocityY = Math.abs(velocityY);
         boolean result = false;
 
-        if(velocityX > this.swipe_Min_Velocity && xDistance > this.swipe_Min_Distance){
-            if(e1.getX() > e2.getX()) // right to left
+        if (velocityX > this.swipe_Min_Velocity && xDistance > this.swipe_Min_Distance) {
+            if (e1.getX() > e2.getX()) // right to left
                 this.listener.onSwipe(SWIPE_LEFT);
             else
                 this.listener.onSwipe(SWIPE_RIGHT);
 
             result = true;
-        }
-        else if(velocityY > this.swipe_Min_Velocity && yDistance > this.swipe_Min_Distance){
-            if(e1.getY() > e2.getY()) // bottom to up
+        } else if (velocityY > this.swipe_Min_Velocity && yDistance > this.swipe_Min_Distance) {
+            if (e1.getY() > e2.getY()) // bottom to up
                 this.listener.onSwipe(SWIPE_UP);
             else
                 this.listener.onSwipe(SWIPE_DOWN);
@@ -100,7 +99,8 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
 
     @Override
     public boolean onDoubleTap(MotionEvent arg) {
-        this.listener.onDoubleTap();;
+        this.listener.onDoubleTap();
+        ;
         return true;
     }
 
@@ -112,7 +112,7 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
     @Override
     public boolean onSingleTapConfirmed(MotionEvent arg) {
 
-        if(this.mode == MODE_DYNAMIC){        // we owe an ACTION_UP, so we fake an
+        if (this.mode == MODE_DYNAMIC) {        // we owe an ACTION_UP, so we fake an
             arg.setAction(ACTION_FAKE);      //action which will be converted to an ACTION_UP later.
             this.context.dispatchTouchEvent(arg);
         }
@@ -120,8 +120,9 @@ public class SimpleGestureFilter extends SimpleOnGestureListener{
         return false;
     }
 
-    static interface SimpleGestureListener{
+    interface SimpleGestureListener {
         void onSwipe(int direction);
+
         void onDoubleTap();
     }
 

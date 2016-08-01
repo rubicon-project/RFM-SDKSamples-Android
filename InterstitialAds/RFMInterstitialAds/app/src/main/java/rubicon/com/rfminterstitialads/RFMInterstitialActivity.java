@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import com.rfm.sdk.RFMAdRequest;
 import com.rfm.sdk.RFMAdView;
 import com.rfm.sdk.RFMConstants;
+import com.rfm.sdk.RFMInterstitialAd;
 import com.rfm.sdk.RFMInterstitialAdViewListener;
 import com.rfm.util.RFMLog;
 
@@ -24,7 +25,7 @@ public class RFMInterstitialActivity extends AppCompatActivity {
     private String LOG_TAG = "RFMInterstitialActivity";
 
     private RFMAdRequest mAdRequest;
-    private RFMAdView mAdView;
+    private RFMInterstitialAd mInterstitialAd;
 
     private String mRfmServer = "http://mrp.rubiconproject.com";
     private String mRfmPubId = "111008";
@@ -45,15 +46,7 @@ public class RFMInterstitialActivity extends AppCompatActivity {
                 requestRFMAd();
             }
         });
-
-
-        // Get the reference to RFM Ad View
-        if (mAdView == null) {
-            mAdView = (RFMAdView) findViewById(R.id.sample_interstitial_adview);
-            // This is to enable HW acceleration for Videos
-            mAdView.enableHWAcceleration(true);
-        }
-
+        mInterstitialAd = new RFMInterstitialAd(this);
         // create the RFM Ad request
         createRFMAdRequest();
 
@@ -73,16 +66,12 @@ public class RFMInterstitialActivity extends AppCompatActivity {
             mAdRequest = new RFMAdRequest();
         }
 
-        // Remove these calls before releasing the publisher app
         mAdRequest.setRFMAdMode(RFMConstants.RFM_AD_MODE_TEST);
-        mAdRequest.setRFMTestAdId(mRfmAdId);
-
+        if (!"0".equalsIgnoreCase(mRfmAdId)) {
+            mAdRequest.setRFMTestAdId(mRfmAdId);
+        }
         mAdRequest.setRFMParams(mRfmServer, mRfmPubId, mRfmAppId);
         mAdRequest.setRFMAdAsInterstitial(true);
-        LinearLayout.LayoutParams bannerLayout = (LinearLayout.LayoutParams) mAdView.getLayoutParams();
-        bannerLayout.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        bannerLayout.height = LinearLayout.LayoutParams.MATCH_PARENT;
-        mAdView.setLayoutParams(bannerLayout);
     }
 
     /**
@@ -90,7 +79,8 @@ public class RFMInterstitialActivity extends AppCompatActivity {
      *
      */
     private void requestRFMAd() {
-        if (!mAdView.requestRFMAd(mAdRequest)) {
+
+        if (!mInterstitialAd.requestRFMAd(mAdRequest)) {
             Log.i(LOG_TAG, "ad request denied");
         } else {
             Log.i(LOG_TAG, "ad request accepted, waiting for ad");
@@ -101,8 +91,8 @@ public class RFMInterstitialActivity extends AppCompatActivity {
      * Utility method to create Ad view listener
      */
     public void setRFMAdViewListener() {
-        if (mAdView != null) {
-            mAdView.setRFMAdViewListener(new RFMInterstitialAdViewListener() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setRFMInterstitialAdListener(new RFMInterstitialAdViewListener() {
 
                 public void onAdRequested(RFMAdView adView, String requestUrl,boolean adRequestSuccess) {
                     Log.i(LOG_TAG, "RFM Ad: Requesting Url:"+requestUrl);
@@ -110,11 +100,8 @@ public class RFMInterstitialActivity extends AppCompatActivity {
 
                 public  void onAdReceived(RFMAdView adView) {
                     Log.i(LOG_TAG, "RFM Ad: Received");
-
-                    if (mAdView.isAdAvailableToDisplay()) {
-                        mAdView.setVisibility(View.VISIBLE);
-                    } else {
-                        Log.i(LOG_TAG, "RFM Ad: Ad is not available to display");
+                    if (mInterstitialAd!= null) {
+                        mInterstitialAd.show();
                     }
                 }
 
@@ -127,7 +114,6 @@ public class RFMInterstitialActivity extends AppCompatActivity {
                 }
 
                 public void onInterstitialAdDismissed(RFMAdView adView) {
-                    mAdView.setVisibility(View.GONE);
                     Log.i(LOG_TAG, "RFM Ad: Interstitial ad dismissed");
                 }
 
@@ -171,8 +157,11 @@ public class RFMInterstitialActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        if (mAdView != null)
-            mAdView.rfmAdViewDestroy();
+        if(mInterstitialAd != null) {
+            mInterstitialAd.setRFMInterstitialAdListener(null);
+            mInterstitialAd.reset();
+            mInterstitialAd = null;
+        }
 
         super.onDestroy();
 

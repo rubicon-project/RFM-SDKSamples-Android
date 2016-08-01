@@ -42,7 +42,7 @@ import static com.rubicon.rfmsample.SQLiteHelper.COLUMN_TEST_CASE_NAME;
 import static com.rubicon.rfmsample.SQLiteHelper.COLUMN_TEST_MODE;
 import static com.rubicon.rfmsample.SQLiteHelper.SAMPLE_ADS_TABLE;
 
-public class RFMAdDataSource {
+class RFMAdDataSource {
 
     String LOG_TAG = "RFMAdDataSource";
     private static RFMAdDataSource rfmAdDataSourceInstance = null;
@@ -76,7 +76,7 @@ public class RFMAdDataSource {
         mDatabaseHelper = new SQLiteHelper(context);
     }
 
-    public static RFMAdDataSource getInstance(Context context) {
+    static RFMAdDataSource getInstance(Context context) {
         if (rfmAdDataSourceInstance == null) {
             synchronized (RFMAdDataSource.class) {
                 if (rfmAdDataSourceInstance == null) {
@@ -87,7 +87,6 @@ public class RFMAdDataSource {
 
         return rfmAdDataSourceInstance;
     }
-
 
     RFMAd createAdUnit(final RFMAd rfmAd) {
         try {
@@ -229,7 +228,7 @@ public class RFMAdDataSource {
                 testMode == 1, fullscreenMode == 1, cachedAdMode == 1, videoAdMode == 1, adId, isCustom == 1, rfmServer, appId, pubId, 0);
     }
 
-    public void cleanUp() {
+    void cleanUp() {
         if(mDatabaseHelper != null) {
             mDatabaseHelper.close();
             mDatabaseHelper = null;

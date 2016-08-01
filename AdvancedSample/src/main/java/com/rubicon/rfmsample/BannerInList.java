@@ -25,8 +25,8 @@ public class BannerInList extends BaseActivity {
 	private final String LOG_TAG = "BannerInList";
 	private ListView mListView = null;
 	private InfoListAdapter infoAdapter = null;
-	public static DisplayMetrics dm = null;
-	protected String sizeParams = "fillparent x 50dp";
+	private String sizeParams = "fillparent x 50dp";
+	static DisplayMetrics dm = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,7 +112,7 @@ public class BannerInList extends BaseActivity {
 		}
 	}
 
-	public static DisplayMetrics fetchScreenSize(Context context) {
+	private static DisplayMetrics fetchScreenSize(Context context) {
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -121,7 +121,7 @@ public class BannerInList extends BaseActivity {
 	}
 
 
-	class AdRFMAdViewListener implements RFMAdViewListener {
+	private class AdRFMAdViewListener implements RFMAdViewListener {
 		/*
          * Sent when the ad request has been processed.
          *
@@ -161,7 +161,7 @@ public class BannerInList extends BaseActivity {
 				BannerInList.this.mAdView = BannerInList.this.infoAdapter.getAdview();
 			}
 			BannerInList.this.mAdView.setVisibility(View.VISIBLE);
-			BannerInList.this.mAdView.displayAd();
+			//BannerInList.this.mAdView.displayAd();
 		}
 
 		/*

@@ -67,8 +67,10 @@ public class SampleMainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(getResources().getString(R.string.main_activity_title));
+        if (toolbar != null) {
+            TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            toolbarTitle.setText(getResources().getString(R.string.main_activity_title));
+        }
 
         mRFMAdDataSource = RFMAdDataSource.getInstance(this);
 
@@ -134,7 +136,6 @@ public class SampleMainActivity extends AppCompatActivity {
         registerReceiver(mReceiver, new IntentFilter(DatabaseChangedReceiver.ACTION_DATABASE_CHANGED));
 
         setJsonToDBUploader();
-
     }
 
     private DatabaseChangedReceiver mReceiver = new DatabaseChangedReceiver() {
@@ -142,7 +143,6 @@ public class SampleMainActivity extends AppCompatActivity {
             updateListUI();
         }
     };
-
 
     private void editAdUnit(final long adUnitId) {
         RFMAdDataSource mRFMAdDataSource = RFMAdDataSource.getInstance(SampleMainActivity.this);
@@ -238,8 +238,6 @@ public class SampleMainActivity extends AppCompatActivity {
 
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
-
-
     }
 
     private void addAdUnit(final RFMAd rfmAd) {
@@ -257,7 +255,7 @@ public class SampleMainActivity extends AppCompatActivity {
         updateListUI();
     }
 
-    protected void showInputDialog() {
+    private void showInputDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(SampleMainActivity.this);
 
         final View promptView = layoutInflater.inflate(R.layout.dialog_add_test_case, null);
@@ -383,7 +381,7 @@ public class SampleMainActivity extends AppCompatActivity {
 
 
     // ----  handle the click of transparent rect to upload data into DB ------
-    final String INPUT_JSON = "/rubicon/rfmsample/input.json";
+    private final String INPUT_JSON = "/rubicon/rfmsample/input.json";
     private static int clickCount = 0;
     private Handler mTimerHandler = new Handler();
     private Runnable counterResetRunnable = new Runnable() {
@@ -400,23 +398,25 @@ public class SampleMainActivity extends AppCompatActivity {
 
     private void setJsonToDBUploader() {
         final View uploadFileToDB = findViewById(R.id.upload_file_to_db);
-        uploadFileToDB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetCount();
-                if (clickCount == 10) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        getPermissionToReadInputJson();
-                    } else {
-                        uploadJsonToDB();
+        if (uploadFileToDB != null) {
+            uploadFileToDB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    resetCount();
+                    if (clickCount == 10) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            getPermissionToReadInputJson();
+                        } else {
+                            uploadJsonToDB();
+                        }
                     }
+                    clickCount++;
                 }
-                clickCount++;
-            }
-        });
+            });
+        }
     }
 
-    public void getPermissionToReadInputJson() {
+    private void getPermissionToReadInputJson() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {

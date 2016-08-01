@@ -20,18 +20,18 @@ import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorInMobiBanner implements RFMCustomBanner {
-    Context mContext;
+    private Context mContext;
     private IMBanner bannerAd;
-    RFMCustomBannerListener mListener;
+    private RFMCustomBannerListener mListener;
     private static final String LOG_TAG = "RFMMediatorInMobiBanner";
     private static final String PARAM_AD_ID = "appId";
 
     /**
      * Implementation for requesting Banner Ad from InMobi via RFM Custom event
      *
-     * @param context
-     * @param params , will have appId, width, height and other parameters specified for Custom Event
-     * @param listener
+     * @param context Activity context
+     * @param params will have appId, width, height and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      */
    @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomBannerListener listener) {
@@ -66,7 +66,7 @@ public class RFMMediatorInMobiBanner implements RFMCustomBanner {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
@@ -81,10 +81,10 @@ public class RFMMediatorInMobiBanner implements RFMCustomBanner {
     /**
      * Utility method to create Banner Ad
      *
-     * @param adParams
+     * @param adParams ad parameters
      * @return true for success / false for failure
      */
-    protected boolean createBannerAd(Map<String, String> adParams) {
+    private boolean createBannerAd(Map<String, String> adParams) {
         printAdParams(adParams);
         String appId=null;
         if(adParams != null) {
@@ -208,7 +208,7 @@ public class RFMMediatorInMobiBanner implements RFMCustomBanner {
 
     /**
      * Utility method to print all the parameters sent from RFM SDK
-     * @param params
+     * @param params ad parameters
      */
     protected void printAdParams(Map<String, String> params) {
         if(params!= null) {

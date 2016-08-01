@@ -69,7 +69,7 @@ public class SampleSettings extends AppCompatActivity {
 
     }
 
-    protected void initSampleSettings() {
+    private void initSampleSettings() {
         RFMAdDataSource rfmAdDataSource = RFMAdDataSource.getInstance(mContext);
         RFMAd rfmAd;
 

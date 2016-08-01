@@ -20,8 +20,8 @@ import java.util.Set;
 
 public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
     private PublisherInterstitialAd mInterstitialAd;
-    Context mContext;
-    RFMCustomInterstitialListener mListener;
+    private Context mContext;
+    private RFMCustomInterstitialListener mListener;
     private static final String LOG_TAG = "AdmDfpInterstitial";
     private static final String TEST_DEVICE_ID = "2CC6189A7D478F739F11622ECCB6EB5F";
     private static final String PARAM_AD_ID = "adUnitId";
@@ -29,22 +29,22 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
     /**
      * Implementation for requesting Interstitial Ad from Admob via RFM Custom event
      *
-     * @param context
-     * @param params , will have adUnitId and other parameters specified for Custom Event
-     * @param listener
+     * @param context  Activity context
+     * @param params   will have adUnitId and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      **/
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomInterstitialListener listener) {
         mContext = context;
         mListener = listener;
         // Create an Interstitial Ad
-        if(createInterstitial(params)) {
+        if (createInterstitial(params)) {
             // Add a listener for callbacks
             createAdListener();
             // request Ad
             loadAd();
         } else {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdFailed("Failed to request DFP Interstitial, site Id missing");
             }
         }
@@ -56,7 +56,7 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
      */
     @Override
     public void reset() {
-        if(mInterstitialAd != null) {
+        if (mInterstitialAd != null) {
             mInterstitialAd.setAdListener(null);
             mInterstitialAd = null;
             mContext = null;
@@ -67,13 +67,13 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
-        if(mInterstitialAd != null) {
+        if (mInterstitialAd != null) {
             mInterstitialAd.show();
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAdDisplayed();
             }
             return true;
@@ -84,18 +84,18 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
     /**
      * Utility method to create Interstitial Ad
      *
-     * @param adParams
+     * @param adParams ad parameters
      * @return true for success / false for failure
      */
-    public boolean createInterstitial(Map<String, String> adParams) {
+    private boolean createInterstitial(Map<String, String> adParams) {
         String adUnitId = null;
         printAdParams(adParams);
-        if(adParams != null) {
+        if (adParams != null) {
             adUnitId = adParams.get(PARAM_AD_ID);
         }
         Log.v(LOG_TAG, "Requesting Interstitial from DFP with adUnitId " + adUnitId);
 
-        if(adUnitId == null) {
+        if (adUnitId == null) {
             return false;
         }
 
@@ -108,7 +108,7 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
      * Utility method to add call back listener
      */
     public void createAdListener() {
-        // Set the AdListener.
+        // Set the AdListener
         mInterstitialAd.setAdListener(new AdListener() {
             /** Called when an ad is loaded. */
             @Override
@@ -124,7 +124,6 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
             public void onAdFailedToLoad(int errorCode) {
                 String message = String.format("DFP InterstitialonAdFailedToLoad (%s)", getErrorReason(errorCode));
                 Log.d(LOG_TAG, message);
-                //Toast.makeText(InterstitialAdActivity.this, message, Toast.LENGTH_SHORT).show();
                 if (mListener != null) {
                     mListener.onAdFailed("EDFP Interstitial error code " + errorCode);
                 }
@@ -138,7 +137,6 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
             @Override
             public void onAdOpened() {
                 Log.d(LOG_TAG, "DFP Interstitial onAdOpened");
-                //Toast.makeText(InterstitialAdActivity.this, "onAdOpened", Toast.LENGTH_SHORT).show();
                 if (mListener != null) {
                     mListener.onAdClicked();
                 }
@@ -151,7 +149,6 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
                 if (mListener != null) {
                     mListener.onAdClosed();
                 }
-                //Toast.makeText(InterstitialAdActivity.this, "onAdClosed", Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -161,7 +158,6 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
             @Override
             public void onAdLeftApplication() {
                 Log.d(LOG_TAG, "DFP Interstitial onAdLeftApplication");
-                //ast.makeText(InterstitialAdActivity.this, "onAdLeftApplication", Toast.LENGTH_SHORT).show();
             }
 
             /** Gets a string error reason from an error code. */
@@ -186,19 +182,18 @@ public class RFMMediatorAdmDFPInterstitial implements RFMCustomInterstitial {
      * Utility method to request Ad
      */
     private void loadAd() {
-        mInterstitialAd.loadAd(new PublisherAdRequest.Builder().addTestDevice(TEST_DEVICE_ID).
-                build());
+        mInterstitialAd.loadAd(new PublisherAdRequest.Builder().addTestDevice(TEST_DEVICE_ID).build());
     }
 
     /**
      * Utility method to print all the parameters sent from RFM SDK
      */
     protected void printAdParams(Map<String, String> params) {
-        if(params!= null) {
+        if (params != null) {
             Log.v(LOG_TAG, "Ad params from RFM Server");
             Set<String> keys = params.keySet();
-            for(String keyStr:keys) {
-                Log.v(LOG_TAG, "Key:"+keyStr+" | Value:"+params.get(keyStr));
+            for (String keyStr : keys) {
+                Log.v(LOG_TAG, "Key:" + keyStr + " | Value:" + params.get(keyStr));
             }
         } else {
             Log.v(LOG_TAG, "No additional Ad params available from RFM Server");

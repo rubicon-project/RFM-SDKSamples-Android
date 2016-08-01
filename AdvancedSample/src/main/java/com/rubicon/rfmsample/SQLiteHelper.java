@@ -14,32 +14,32 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+class SQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String SAMPLE_ADS_TABLE = "sampleads";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_TEST_CASE_NAME = "testCaseName";
-    public static final String COLUMN_SITE_ID = "siteId";
-    public static final String COLUMN_AD_TYPE = "adType";
-    public static final String COLUMN_REFRESH_COUNT = "refreshCount";
-    public static final String COLUMN_REFRESH_INTERVAL = "refreshInterval";
-    public static final String COLUMN_LOCATION_TYPE = "locationType";
-    public static final String COLUMN_LOCATION_PRECISION = "locationPrecision";
-    public static final String COLUMN_LAT = "latitude";
-    public static final String COLUMN_LONG = "longitude";
-    public static final String COLUMN_TARGETING_KEY_VALUE = "targetingKeyValue";
-    public static final String COLUMN_AD_WIDTH = "adWidth";
-    public static final String COLUMN_AD_HEIGHT = "adHeight";
-    public static final String COLUMN_TEST_MODE = "testMode";
-    public static final String COLUMN_FULL_SCREEN_MODE = "fullscreenMode";
-    public static final String COLUMN_CACHED_AD_MODE = "cachedAdMode";
-    public static final String COLUMN_VIDEO_AD_MODE = "videoAdMode";
-    public static final String COLUMN_AD_ID = "adId";
-    public static final String COLUMN_IS_CUSTOM = "isCustom";
+    static final String SAMPLE_ADS_TABLE = "sampleads";
+    static final String COLUMN_ID = "_id";
+    static final String COLUMN_TEST_CASE_NAME = "testCaseName";
+    static final String COLUMN_SITE_ID = "siteId";
+    static final String COLUMN_AD_TYPE = "adType";
+    static final String COLUMN_REFRESH_COUNT = "refreshCount";
+    static final String COLUMN_REFRESH_INTERVAL = "refreshInterval";
+    static final String COLUMN_LOCATION_TYPE = "locationType";
+    static final String COLUMN_LOCATION_PRECISION = "locationPrecision";
+    static final String COLUMN_LAT = "latitude";
+    static final String COLUMN_LONG = "longitude";
+    static final String COLUMN_TARGETING_KEY_VALUE = "targetingKeyValue";
+    static final String COLUMN_AD_WIDTH = "adWidth";
+    static final String COLUMN_AD_HEIGHT = "adHeight";
+    static final String COLUMN_TEST_MODE = "testMode";
+    static final String COLUMN_FULL_SCREEN_MODE = "fullscreenMode";
+    static final String COLUMN_CACHED_AD_MODE = "cachedAdMode";
+    static final String COLUMN_VIDEO_AD_MODE = "videoAdMode";
+    static final String COLUMN_AD_ID = "adId";
+    static final String COLUMN_IS_CUSTOM = "isCustom";
 
-    public static final String COLUMN_RFM_SERVER = "rfmServer";
-    public static final String COLUMN_APP_ID = "appId";
-    public static final String COLUMN_PUB_ID = "pubId";
+    static final String COLUMN_RFM_SERVER = "rfmServer";
+    static final String COLUMN_APP_ID = "appId";
+    static final String COLUMN_PUB_ID = "pubId";
 
     private static final String DATABASE_NAME = "sampleadsDatabase.db";
     private static final int DATABASE_VERSION = 1;
@@ -73,16 +73,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
             + ");";
 
-    //private final Context mContext;
-
-    public SQLiteHelper(final Context context) {
+    SQLiteHelper(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        //mContext = context.getApplicationContext();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        final List<RFMAd> rfmAdList = new ArrayList<RFMAd>();
+        final List<RFMAd> rfmAdList = new ArrayList<>();
 
         rfmAdList.add(new RFMAd(-1, "Simple Banner", "",
                 RFMAd.AdType.BANNER, 1, 0, RFMAd.LocationType.FIXED, "6","0.0", "0.0",
@@ -112,6 +109,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 RFMAd.AdType.BANNER, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
                   "", 320, 50, true, true, false, false, "0", false, "http://mrp.rubiconproject.com", "7B8997905A6E01330D6A22000B2E019E", "111008", 7));
 
+        rfmAdList.add(new RFMAd(-1, "Rewarded Video Ad", "",
+                RFMAd.AdType.REWARDED_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 480, true, true, false, true, "0", false, "http://mrp.rubiconproject.com", "CDBBF1A037F60134162922000B3510F7", "111315", 8));
 
         sqLiteDatabase.execSQL(DATABASE_CREATE);
         sqLiteDatabase.beginTransaction();

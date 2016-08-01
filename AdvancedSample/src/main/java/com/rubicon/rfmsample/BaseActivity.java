@@ -45,15 +45,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected String LOG_TAG = "BaseActivity";
 
-    protected String mAdUnitTitle;
-    protected String rowNumber;
-    protected long mAdUnitId;
+    private String mAdUnitTitle;
+    private String rowNumber;
+    private long mAdUnitId;
     protected int mAdWidth;
     protected int mAdHeight;
-    protected String mRfmServer;
-    protected String mRfmAppId;
-    protected String mRfmPubId;
-    protected String mRfmAdId;
+    String mRfmServer;
+    String mRfmAppId;
+    String mRfmPubId;
+    String mRfmAdId;
     private LocationManager mLocationManager;
     private RFMAd.LocationType mLocationType;
     private String mLatitude;
@@ -64,22 +64,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     private int mRefreshCount = 0;
     private int mRefreshInterval = 0;
 
-    protected int mDisplayDensity = 1;
-    protected int mDisplayHeight = 100;
+    int mDisplayDensity = 1;
+    int mDisplayHeight = 100;
 
-    protected int mNumberOfRequests = 0;
-    protected int mNumberOfSuccess = 0;
-    protected int mNumberOfFailures = 0;
+    int mNumberOfRequests = 0;
+    int mNumberOfSuccess = 0;
+    int mNumberOfFailures = 0;
 
     private TextView mCountersTextViewContent;
     private String mCountersStr = "";
 
-    protected RFMAdView mAdView;
-    protected RFMAdRequest mAdRequest;
-    protected boolean mRfmAdTestMode;
-    protected boolean mFullscreenMode;
-    protected boolean mCachedAdMode;
-    protected boolean mVideoAdMode;
+    RFMAdView mAdView;
+    RFMAdRequest mAdRequest;
+    boolean mRfmAdTestMode;
+    boolean mFullscreenMode;
+    boolean mCachedAdMode;
+    boolean mVideoAdMode;
     private StringBuffer mLogData = new StringBuffer();
     private TextView mLogText;
 
@@ -91,6 +91,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
 
         Bundle extras = getIntent().getExtras();
+
+        if (extras == null)
+            return;
+
         RFMAd rfmAd = RFMAd.fromBundle(extras);
 
         mAdUnitTitle = rfmAd.getTestCaseName();
@@ -121,15 +125,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         mDisplayHeight = mWinMgr.getDefaultDisplay().getHeight();
 
         registerReceiver(mReceiver, new IntentFilter(DatabaseChangedReceiver.ACTION_DATABASE_CHANGED));
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopTimer();
-        unregisterReceiver(mReceiver);
-
     }
 
     @Override
@@ -143,12 +144,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 i.putExtra(RFMAd.ID, mAdUnitId);
                 i.putExtra(TestCaseSettings.DISABLE_VIDEO_ADS, false);
                 String parentClass = getLocalClassName();
-                if (parentClass.equals("InterstitialAd") || parentClass.equals("VastAd"))
+                if (parentClass.equals("FullScreenInterstitialAd") || parentClass.equals("VastAd"))
                     i.putExtra(TestCaseSettings.DISABLE_FULLSCREEN, false);
                 else
                     i.putExtra(TestCaseSettings.DISABLE_FULLSCREEN, true);
 
-                if (!parentClass.equals("InterstitialAd"))
+                if (!parentClass.equals("FullScreenInterstitialAd"))
                     i.putExtra(TestCaseSettings.DISABLE_CACHED_AD, true);
 
                 startActivity(i);
@@ -182,7 +183,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     };
 
-    protected void setLoadAdAction() {
+    void setLoadAdAction() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.sample_toolbar);
         setSupportActionBar(toolbar);
@@ -194,10 +195,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("(" + rowNumber + ") " + mAdUnitTitle);
+        if (collapsingToolbar != null)
+            collapsingToolbar.setTitle("(" + rowNumber + ") " + mAdUnitTitle);
 
         TextView backdropSubtext = (TextView) findViewById(R.id.backdrop_subtext);
-        backdropSubtext.setText(getResources().getString(R.string.app_id, mRfmAppId));
+        if (backdropSubtext != null)
+            backdropSubtext.setText(getResources().getString(R.string.app_id, mRfmAppId));
 
         FloatingActionButton fetchAd = (FloatingActionButton) findViewById(R.id.fetch_ad);
         if (fetchAd != null) {
@@ -226,10 +229,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ImageView expandButton = (ImageView) findViewById(R.id.expand_button);
-                    if (isCounterViewExpanded) {
+                    if (isCounterViewExpanded && expandButton != null) {
                         expandButton.setImageResource(R.drawable.ic_arrow_up_white);
                         ExpandCollapseHelper.collapse(mCountersTextViewContent);
-                    } else {
+                    } else if (expandButton != null) {
                         expandButton.setImageResource(R.drawable.ic_arrow_down_white);
                         ExpandCollapseHelper.expand(mCountersTextViewContent);
                     }
@@ -242,24 +245,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         final TextView logText = (TextView) findViewById(R.id.log_text);
 
         ImageView expandButton2 = (ImageView) findViewById(R.id.expand_button_2);
-        if (parentClass.equals("BannerInList")) {
+        if (parentClass.equals("BannerInList") && expandButton2 != null) {
             expandButton2.setVisibility(View.GONE);
         } else {
-            logs_text_view_title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageView expandButton2 = (ImageView) findViewById(R.id.expand_button_2);
-                    if (isLogsViewExpanded) {
-                        expandButton2.setImageResource(R.drawable.ic_arrow_up_white);
-                        ExpandCollapseHelper.collapse(logText);
-                    } else {
-                        expandButton2.setImageResource(R.drawable.ic_arrow_down_white);
-                        ExpandCollapseHelper.expand(logText);
-                    }
-                    isLogsViewExpanded = !isLogsViewExpanded;
+            if (logs_text_view_title != null) {
+                logs_text_view_title.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ImageView expandButton2 = (ImageView) findViewById(R.id.expand_button_2);
+                        if (isLogsViewExpanded && expandButton2 != null) {
+                            expandButton2.setImageResource(R.drawable.ic_arrow_up_white);
+                            ExpandCollapseHelper.collapse(logText);
+                        } else if (expandButton2 != null) {
+                            expandButton2.setImageResource(R.drawable.ic_arrow_down_white);
+                            ExpandCollapseHelper.expand(logText);
+                        }
+                        isLogsViewExpanded = !isLogsViewExpanded;
 
-                }
-            });
+                    }
+                });
+            }
         }
 
         ImageView clearButton = (ImageView) findViewById(R.id.clear_button);
@@ -326,7 +331,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTimer1.schedule(mTt1, mRefreshInterval, mRefreshInterval);
     }
 
-    protected void updateCountersView() {
+    void updateCountersView() {
         mCountersStr = "Requests : " + mNumberOfRequests +  "\n" +
                 "Success : " + mNumberOfSuccess + "\n" +
                 "Failure : " + mNumberOfFailures;
@@ -345,7 +350,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void appendTextToConsole(String data) {
+    void appendTextToConsole(String data) {
         mLogData.append(data + "\n");
         mLogText.setText(mLogData);
 
@@ -365,10 +370,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Method to change AdRequest location information
-     */
-    protected void setAdRequestLocation() {
+    // Method to change AdRequest location information
+    private void setAdRequestLocation() {
         if (mLocationType == null || mAdRequest ==null) {
             Log.v(LOG_TAG, "Cannot setAdRequestLocation, invalid Preferences");
             return;
@@ -433,10 +436,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Method to change AdView's Width and Height based on preferences
-     */
-    protected void setAdRequestSize(int adwidth, int adheight){
+    // Method to change AdView's Width and Height based on preferences
+    void setAdRequestSize(int adwidth, int adheight){
 
         if(mAdView == null) {
             return;
@@ -444,6 +445,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         try {
             Log.v(LOG_TAG, "Into setAdRequestSize, Width = " + adwidth+" | Height = "+adheight);
             LinearLayout.LayoutParams bannerLayout = (LinearLayout.LayoutParams) mAdView.getLayoutParams();
+
+            if (bannerLayout == null)
+                return;
+
             if (adwidth == -1  || adwidth < -1) {
                 bannerLayout.width = LinearLayout.LayoutParams.FILL_PARENT;
             } else {
@@ -468,7 +473,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public String getLocalIpAddress() {
+    private String getLocalIpAddress() {
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                 NetworkInterface intf = en.nextElement();
@@ -488,6 +493,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void loadAd();
 
     public abstract void updateAdView();
-
 
 }

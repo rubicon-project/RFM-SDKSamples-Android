@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class RFMMediatorFBANInterstitial implements RFMCustomInterstitial {
-    Context mContext;
-    RFMCustomInterstitialListener mListener;
+    private Context mContext;
+    private RFMCustomInterstitialListener mListener;
     private InterstitialAd mInterstitialAd;
     private static final String LOG_TAG = "FBANInterstitial";
     private static final String PARAM_AD_ID = "placementId";
@@ -28,9 +28,9 @@ public class RFMMediatorFBANInterstitial implements RFMCustomInterstitial {
     /**
      * Implementation for requesting Interstitial Ad from FBAN via RFM Custom event
      *
-     * @param context
-     * @param params , will have placementId and other parameters specified for Custom Event
-     * @param listener
+     * @param context Activity context
+     * @param params will have placementId and other parameters specified for Custom Event
+     * @param listener RFMCustomBannerListener listener
      **/
     @Override
     public void requestAd(Context context, Map<String, String> params, RFMCustomInterstitialListener listener) {
@@ -63,7 +63,7 @@ public class RFMMediatorFBANInterstitial implements RFMCustomInterstitial {
     /**
      * Method to do the needful for displaying Ad
      *
-     * @return
+     * @return return true if the ad is displayed successfully
      */
     @Override
     public boolean display() {
@@ -78,7 +78,7 @@ public class RFMMediatorFBANInterstitial implements RFMCustomInterstitial {
     /**
      * Utility method to create Interstitial Ad
      *
-     * @param  params
+     * @param  params ad parameters
      * @return true for success / false for failure
      */
     private boolean createInterstitial(Map<String, String> params) {
