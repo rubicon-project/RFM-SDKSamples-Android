@@ -6,6 +6,7 @@
     <!-- Sample Main Activity -->
     <string name="item_deleted">Item Deleted</string>
     <string name="main_activity_title">RFM Sample</string>
+    <string name="native_main_activity_title">Native Ads Sample</string>
     <string name="preset">PRESET</string>
     <string name="user_defined">USER DEFINED</string>
     <string name="header">Header</string>
@@ -77,5 +78,7 @@
 
     <string name="displaycachedad">Display Cached Ad</string>
     <string name="displayad">Display Ad</string>
+
+    <string name="label_title">Title</string>
 
 </resources>

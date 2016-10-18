@@ -9,6 +9,8 @@
     <color name="rubicon_red">#F44336</color>
     <color name="rubicon_blue">#ff007fe6</color>
     <color name="text_color">#757575</color>
+    <color name="feed_bg">#d3d6db</color>
+    <color name="feed_item_border">#c2c3c8</color>
 
     <color name="backdrop_subtext">#FAC5C2</color>
 
@@ -16,4 +18,7 @@
 
     <color name="expandable_header">#D32F2F</color>
     <color name="seperator_background">#757575</color>
+
+    <color name="subtitle">#d3d3d3</color>
+    <color name="timestamp">#808080</color>
 </resources>

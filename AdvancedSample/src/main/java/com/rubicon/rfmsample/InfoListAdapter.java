@@ -200,7 +200,7 @@ class InfoListAdapter extends BaseAdapter {
 	}
 
 	private void addListener() {
-		//Optional listener for RFMAd status
+		//Optional listener for RFMAdHandler status
 		if(adViewListener != null) {
 			mBanner.setRFMAdViewListener(adViewListener);
 			return;
@@ -209,7 +209,7 @@ class InfoListAdapter extends BaseAdapter {
 		if(mBanner != null){
 			mBanner.setRFMAdViewListener(new RFMAdViewListener(){
 
-				public void onAdRequested(RFMAdView adView, String requestUrl,boolean adRequestSuccess){
+				public void onAdRequested(String requestUrl,boolean adRequestSuccess){
 					Log.v(LOG_TAG, "onAdRequested being invoked");
 				}
 

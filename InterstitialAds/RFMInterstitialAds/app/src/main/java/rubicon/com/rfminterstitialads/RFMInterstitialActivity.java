@@ -94,10 +94,12 @@ public class RFMInterstitialActivity extends AppCompatActivity {
         if (mInterstitialAd != null) {
             mInterstitialAd.setRFMInterstitialAdListener(new RFMInterstitialAdViewListener() {
 
-                public void onAdRequested(RFMAdView adView, String requestUrl,boolean adRequestSuccess) {
+                @Override
+                public void onAdRequested(String requestUrl, boolean requestsuccess) {
                     Log.i(LOG_TAG, "RFM Ad: Requesting Url:"+requestUrl);
                 }
 
+                @Override
                 public  void onAdReceived(RFMAdView adView) {
                     Log.i(LOG_TAG, "RFM Ad: Received");
                     if (mInterstitialAd!= null) {
@@ -105,14 +107,17 @@ public class RFMInterstitialActivity extends AppCompatActivity {
                     }
                 }
 
+                @Override
                 public  void onAdFailed(RFMAdView adView){
                     Log.i(LOG_TAG, "RFM Ad: Failed");
                 }
 
+                @Override
                 public void onInterstitialAdWillDismiss(RFMAdView adView) {
                     Log.i(LOG_TAG, "RFM Ad: Interstitial will dismiss");
                 }
 
+                @Override
                 public void onInterstitialAdDismissed(RFMAdView adView) {
                     Log.i(LOG_TAG, "RFM Ad: Interstitial ad dismissed");
                 }

@@ -86,7 +86,6 @@ public class FullScreenInterstitialAd extends BaseActivity {
 		appendTextToConsole("\nRequesting Ad from RFM SDK");
 
 		mAdRequest.setRFMAdAsInterstitial(mFullscreenMode);
-
 		if(mVideoAdMode) {
 			// Fetch video ads and force VAST type Video ads
 			mAdRequest.fetchVideoAds(true);
@@ -139,7 +138,7 @@ public class FullScreenInterstitialAd extends BaseActivity {
 
 		rfmInterstitialAd.setRFMInterstitialAdListener(new RFMInterstitialAdViewListener() {
 
-			public void onAdRequested(RFMAdView adView, String requestUrl,boolean adRequestSuccess) {
+			public void onAdRequested(String requestUrl,boolean adRequestSuccess) {
 				appendTextToConsole("RFM Ad: Requesting Url:"+requestUrl);
 			}
 
@@ -150,7 +149,6 @@ public class FullScreenInterstitialAd extends BaseActivity {
 
 			public  void onAdFailed(RFMAdView adView){
 				appendTextToConsole("RFM Ad: Failed");
-
 				mNumberOfFailures = mNumberOfFailures + 1;
 				updateCountersView();
 			}

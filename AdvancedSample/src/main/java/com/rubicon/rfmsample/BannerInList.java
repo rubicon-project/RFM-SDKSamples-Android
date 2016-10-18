@@ -139,7 +139,7 @@ public class BannerInList extends BaseActivity {
          *
          *
          */
-		public void onAdRequested(RFMAdView adView, String requestUrl, boolean adRequestSuccess) {
+		public void onAdRequested(String requestUrl, boolean adRequestSuccess) {
 			Log.v(LOG_TAG, "onAdRequested being invoked");
 			appendTextToConsole("RFM Ad: Requesting Url:" + requestUrl);
 			if (BannerInList.this.mAdView == null) {

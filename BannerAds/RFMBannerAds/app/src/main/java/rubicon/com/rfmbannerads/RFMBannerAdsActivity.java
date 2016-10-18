@@ -49,7 +49,6 @@ public class RFMBannerAdsActivity extends AppCompatActivity {
         if (mAdView == null) {
             mAdView = (RFMAdView) findViewById(R.id.simplebanner_adview);
             // This is to enable HW acceleration for Videos
-            mAdView.enableHWAcceleration(true);
         }
 
         // create the RFM Ad request
@@ -97,7 +96,8 @@ public class RFMBannerAdsActivity extends AppCompatActivity {
         if (mAdView != null) {
             mAdView.setRFMAdViewListener(new RFMAdViewListener() {
 
-                public void onAdRequested(RFMAdView adView, String requestUrl, boolean adRequestSuccess) {
+                @Override
+                public void onAdRequested(String requestUrl, boolean b) {
                     mAdView.setVisibility(View.GONE);
                     Log.i(LOG_TAG, "RFM Ad: Requesting Url:" + requestUrl);
                 }

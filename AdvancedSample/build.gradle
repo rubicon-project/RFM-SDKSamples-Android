@@ -123,5 +123,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
     
     androidTestCompile 'com.android.support:support-annotations:23.3.0'
+    compile 'com.facebook.fresco:fresco:0.7.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
 }

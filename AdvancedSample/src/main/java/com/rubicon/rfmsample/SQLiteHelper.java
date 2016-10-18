@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.rfm.sdk.RFMConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,15 @@ class SQLiteHelper extends SQLiteOpenHelper {
         rfmAdList.add(new RFMAd(-1, "Rewarded Video Ad", "",
                 RFMAd.AdType.REWARDED_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
                 "", 320, 480, true, true, false, true, "0", false, "http://mrp.rubiconproject.com", "CDBBF1A037F60134162922000B3510F7", "111315", 8));
+
+        rfmAdList.add(new RFMAd(-1, "Native Ad News feed List", "", RFMAd.AdType.NATIVE_AD_NEWS_FEED, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 9));
+
+        rfmAdList.add(new RFMAd(-1, "Native Ad Chat List", "", RFMAd.AdType.NATIVE_AD_CHAT_LIST, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 10));
+
+        rfmAdList.add(new RFMAd(-1, "Native Ad Content Steam", "", RFMAd.AdType.NATIVE_AD_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 11));
 
         sqLiteDatabase.execSQL(DATABASE_CREATE);
         sqLiteDatabase.beginTransaction();

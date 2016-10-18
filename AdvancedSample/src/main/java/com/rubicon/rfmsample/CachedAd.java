@@ -38,7 +38,7 @@ public class CachedAd extends BaseActivity {
         if (mAdView == null) {
             mAdView = (RFMAdView) findViewById(R.id.bannerviewone);
             // This is to enable HW acceleration for Videos
-            mAdView.enableHWAcceleration(true);
+            //mAdView.enableHWAcceleration(true);
 
             //UI control for Sample App
             mAdView.setBackgroundColor(Color.TRANSPARENT);
@@ -110,7 +110,7 @@ public class CachedAd extends BaseActivity {
      * Utility method to set RFM AdView listener
      */
     private void setRFMAdViewListener() {
-        // Optional listener for RFMAd status
+        // Optional listener for RFMAdHandler status
         if (mAdView != null) {
             mAdView.setRFMAdViewListener(new RFMAdViewListener() {
 
@@ -130,7 +130,7 @@ public class CachedAd extends BaseActivity {
                  * state where it cannot accept new ad requests.
                  *
                  */
-                public void onAdRequested(RFMAdView adView, String requestUrl, boolean adRequestSuccess) {
+                public void onAdRequested(String requestUrl, boolean adRequestSuccess) {
                     mAdView.setVisibility(View.GONE);
                     appendTextToConsole("RFM Ad: Requesting Url:" + requestUrl);
                 }

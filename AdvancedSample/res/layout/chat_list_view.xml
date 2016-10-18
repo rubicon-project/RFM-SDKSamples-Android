@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/background_light"
+    android:padding="5dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/chat_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp"
+        >
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_alignParentLeft="false"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        fresco:placeholderImage = "@drawable/ic_launcher"
+        />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+            android:layout_toEndOf="@id/icon"
+            android:layout_toRightOf="@id/icon"
+            android:layout_marginTop="15dp"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="15dp"
+            android:paddingTop="0dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="false"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/adchoiceicon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="15dp"
+            android:paddingTop="0dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="false"
+            fresco:placeholderImage = "@drawable/adchoices"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/ctaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#0A0A0A"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/icon"
+            android:layout_below="@+id/title"
+            android:layout_alignParentRight="false"
+            android:ellipsize="marquee"
+            android:layout_marginRight="15dp"
+            android:textSize="10sp"
+            android:typeface="normal"
+            android:textStyle="normal"
+            />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#0A0A0A"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/icon"
+            android:layout_below="@+id/title"
+            android:layout_alignParentRight="false"
+            android:ellipsize="marquee"
+            android:layout_marginRight="15dp"
+            android:textSize="10sp"
+            android:typeface="normal"
+            android:textStyle="normal"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/sponsored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textColor="@color/black"
+        android:typeface="normal"
+        android:textStyle="bold"
+        android:textSize="10sp" />
+
+</LinearLayout>
