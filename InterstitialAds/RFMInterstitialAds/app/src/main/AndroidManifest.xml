@@ -34,7 +34,7 @@
             android:name="com.rfm.sdk.MraidVideoPlayerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <!-- com.rfm.sdk.RFMActivity: required for RFM SDK to serve Mraid, VAST & Rewarded Video Interstitial ads -->
+        <!-- com.rfm.sdk.RFMActivity: required for RFM SDK to serve Interstitial ads -->
         <activity android:name="com.rfm.sdk.RFMActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 

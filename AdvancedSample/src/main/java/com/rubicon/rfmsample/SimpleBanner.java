@@ -34,9 +34,7 @@ public class SimpleBanner extends BaseActivity {
         if (mAdView == null) {
             mAdView = (RFMAdView) findViewById(R.id.bannerviewone);
             if (mAdView != null) {
-                // This is to enable HW acceleration for Videos
-                mAdView.enableHWAcceleration(true);
-               //UI control for Sample App
+                //UI control for Sample App
                 mAdView.setBackgroundColor(Color.TRANSPARENT);
             }
         }
@@ -135,7 +133,7 @@ public class SimpleBanner extends BaseActivity {
                  * state where it cannot accept new ad requests.
                  *
                  */
-                public void onAdRequested(RFMAdView adView, String requestUrl, boolean adRequestSuccess) {
+                public void onAdRequested(String requestUrl, boolean adRequestSuccess) {
                     mAdView.setVisibility(View.GONE);
                     appendTextToConsole("RFM Ad: Requesting Url:" + requestUrl);
                 }

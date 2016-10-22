@@ -77,7 +77,7 @@ public class NativeAdChatAppList extends BaseActivity{
 
     public void loadTestImages() {
         adImgView  = new ImageView(this);
-        adImgView.setImageResource(R.drawable.loadingicon);
+        adImgView.setImageResource(R.color.cardview_light_background);
     }
 
     @Override
