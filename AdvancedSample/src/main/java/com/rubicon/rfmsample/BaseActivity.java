@@ -131,6 +131,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         stopTimer();
+
+        try {
+            if (mReceiver != null)
+                unregisterReceiver(mReceiver);
+        } catch (Exception e) {
+            // Caused if the receiver is not registered
+        }
     }
 
     @Override
