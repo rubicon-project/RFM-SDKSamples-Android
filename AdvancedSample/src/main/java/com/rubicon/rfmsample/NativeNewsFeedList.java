@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,15 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.rfm.sdk.*;
 
 public class NativeNewsFeedList extends BaseActivity{
     private static final String LOG_TAG = NativeNewsFeedList.class.getSimpleName();
+    private Map<Integer, RFMNativeAdResponse> mAdResponseMap = new HashMap<>();
     private List<FeedData.FeedItem> mNewsFeedItemList = new ArrayList<>();
     private static final int[] AD_POSITIONS = new int[]{2, 6, 9, 15, 19};
     private NewsFeedAdapter originalAdapter;
@@ -34,7 +38,6 @@ public class NativeNewsFeedList extends BaseActivity{
     private LayoutInflater inflater;
     private TextView loadMoreButton;
     boolean loadMore = true;
-    private final String serverName = "http://mrp.rubiconproject.com/";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,10 @@ public class NativeNewsFeedList extends BaseActivity{
         addLoadMoreFooter();
         setLoadAdAction();
 
+/**
+ *  Uncomment to verify if getOrigAdapterPosition() method returns correct position
+ *
+ */
 //        if(mNewsFeedList != null) {
 //            mNewsFeedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
@@ -107,7 +114,6 @@ public class NativeNewsFeedList extends BaseActivity{
         };
 
         rfmNativeAdAdapter = new RFMNativeAdAdapter(this, originalAdapter, AD_POSITIONS, nativeUIHandler, RFMNativeAdAdapter.DEFAULT_REPEAT_INTERVAL);
-        rfmNativeAdAdapter.setServerName(serverName);
         mNewsFeedList.setAdapter(rfmNativeAdAdapter);
     }
 
@@ -212,8 +218,8 @@ public class NativeNewsFeedList extends BaseActivity{
         }
 
         public void updateData(final List<FeedData.FeedItem> items) {
-                mItems = items;
-                notifyDataSetChanged();
+            mItems = items;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -354,6 +360,7 @@ public class NativeNewsFeedList extends BaseActivity{
                 }
             });
 
+
             adResponse.registerView(rowView, new RFMNativeAdEventsListener() {
                 @Override
                 public void onAdWasClicked() {
@@ -365,6 +372,7 @@ public class NativeNewsFeedList extends BaseActivity{
                     Log.d(LOG_TAG, "Ad will leave application ");
                 }
             });
+            mAdResponseMap.put(position, adResponse);
             return rowView;
         } catch (Exception e) {
             e.printStackTrace();
@@ -373,8 +381,17 @@ public class NativeNewsFeedList extends BaseActivity{
     }
 
     public void cleanupData() {
+        for(RFMNativeAdResponse response:mAdResponseMap.values()) {
+            try {
+                response.unregisterView();
+                response.destroy();
+            } catch (Exception e) {
+
+            }
+        }
+        rfmNativeAdAdapter.destroy();
         mNewsFeedItemList.clear();
         originalAdapter.clear();
-        rfmNativeAdAdapter.destroy();
+
     }
 }
