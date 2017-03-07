@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2016. Rubicon Project. All rights reserved
  *
@@ -91,7 +92,7 @@ public class RFMAd implements Comparable<RFMAd> {
         BANNER_IN_LIST ("BannerInList", BannerInList.class),
         CACHED_AD ("CachedAd", CachedAd.class),
         REWARDED_VIDEO ("RewardedVideo", RewardedVideoAd.class),
-        NATIVE_AD_NEWS_FEED("NativeAdNewsFeedList", NativeAdNewsFeedList.class),
+        NATIVE_AD_NEWS_FEED("NativeAdNewsFeedList", NativeNewsFeedList.class),
         NATIVE_AD_CHAT_LIST("NativeAdChatAppList", NativeAdChatAppList.class),
         NATIVE_AD_VIDEO("NativeAdContentStream", NativeContentStreamList.class);
 

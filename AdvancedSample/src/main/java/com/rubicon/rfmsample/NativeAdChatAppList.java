@@ -271,8 +271,12 @@ public class NativeAdChatAppList extends BaseActivity{
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_VIEW);
                                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                if (adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink() != null) {
-                                    intent.setData(Uri.parse(adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink().getURL()));
+                                RFMNativeAssets.Link linkToOpen = adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink();
+                                if(linkToOpen == null) {
+                                    linkToOpen = adResponse.getLink();
+                                }
+                                if (linkToOpen != null && linkToOpen.getURL() != null) {
+                                    intent.setData(Uri.parse(linkToOpen.getURL() ));
                                     startActivity(intent);
                                 }
                             }
@@ -326,6 +330,14 @@ public class NativeAdChatAppList extends BaseActivity{
                         @Override
                         public void onAdWasClicked() {
                             Log.d(LOG_TAG, "Ad was clicked");
+                            RFMNativeAssets.Link linkToOpen = adResponse.getLink();
+                            if (linkToOpen != null && linkToOpen.getURL() != null) {
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                intent.setData(Uri.parse(linkToOpen.getURL() ));
+                                startActivity(intent);
+                            }
                         }
 
                         @Override

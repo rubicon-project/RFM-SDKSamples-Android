@@ -78,7 +78,8 @@
 
     <string name="displaycachedad">Display Cached Ad</string>
     <string name="displayad">Display Ad</string>
-
+    <string name="loadmore"> Load More </string>
+    <string name="refresh"> Refresh </string>
     <string name="label_title">Title</string>
 
 </resources>

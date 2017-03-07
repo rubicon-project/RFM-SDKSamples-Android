@@ -115,7 +115,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
                 RFMAd.AdType.REWARDED_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
                 "", 320, 480, true, true, false, true, "0", false, "http://mrp.rubiconproject.com", "CDBBF1A037F60134162922000B3510F7", "111315", 8));
 
-        rfmAdList.add(new RFMAd(-1, "Native Ad News feed List", "", RFMAd.AdType.NATIVE_AD_NEWS_FEED, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+        rfmAdList.add(new RFMAd(-1, "Native Ad with RFM Adapter", "", RFMAd.AdType.NATIVE_AD_NEWS_FEED, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
                 "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 9));
 
         rfmAdList.add(new RFMAd(-1, "Native Ad Chat List", "", RFMAd.AdType.NATIVE_AD_CHAT_LIST, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
