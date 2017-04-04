@@ -29,11 +29,13 @@ import com.rfm.sdk.RFMNativeAdEventsListener;
 import com.rfm.sdk.RFMNativeAdRequest;
 import com.rfm.sdk.RFMNativeAdResponse;
 import com.rfm.sdk.RFMNativeAssets;
+import com.rfm.util.ImageCacheListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class NativeAdChatAppList extends BaseActivity{
     private static final String LOG_TAG = "NativeAdChatAppList";
@@ -154,6 +156,23 @@ public class NativeAdChatAppList extends BaseActivity{
             }
         }
         adResponseMap.put(position, adResponse);
+//        /** Optional pre Cache API if Publisher intends to cache images before building Native UI **/
+//        adResponse.preCacheImages(this, new ImageCacheListener() {
+//            @Override
+//            public void onImagesCached(Map<String, String> urlCacheMap) {
+//                if(urlCacheMap != null && !urlCacheMap.isEmpty()) {
+//                    for(String imageStr:urlCacheMap.keySet()) {
+//                        Log.v(LOG_TAG, " Image (URL: Cache location),  "+imageStr+":"+urlCacheMap.get(imageStr));
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onImagesFailedToCache(String errorMessage) {
+//                Log.v(LOG_TAG, "Failed to cache images,  "+errorMessage);
+//            }
+//        });
         mChatAppAdapter.notifyDataSetChanged();
         Log.d(LOG_TAG, "Updated native ad responses");
     }
@@ -271,12 +290,8 @@ public class NativeAdChatAppList extends BaseActivity{
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_VIEW);
                                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                RFMNativeAssets.Link linkToOpen = adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink();
-                                if(linkToOpen == null) {
-                                    linkToOpen = adResponse.getLink();
-                                }
-                                if (linkToOpen != null && linkToOpen.getURL() != null) {
-                                    intent.setData(Uri.parse(linkToOpen.getURL() ));
+                                if (adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink() != null) {
+                                    intent.setData(Uri.parse(adResponse.getDataAsset(RFMNativeAssets.DATA_CTA).getLink().getURL()));
                                     startActivity(intent);
                                 }
                             }
@@ -330,14 +345,6 @@ public class NativeAdChatAppList extends BaseActivity{
                         @Override
                         public void onAdWasClicked() {
                             Log.d(LOG_TAG, "Ad was clicked");
-                            RFMNativeAssets.Link linkToOpen = adResponse.getLink();
-                            if (linkToOpen != null && linkToOpen.getURL() != null) {
-                                Intent intent = new Intent();
-                                intent.setAction(Intent.ACTION_VIEW);
-                                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                intent.setData(Uri.parse(linkToOpen.getURL() ));
-                                startActivity(intent);
-                            }
                         }
 
                         @Override
@@ -375,30 +382,33 @@ public class NativeAdChatAppList extends BaseActivity{
 
     public void cleanupAds() {
         int adposition = 0;
-        if(adViewMap != null) {
-            for(int i=0;i<AD_POSITIONS.length;i++) {
-                try {
-                    ViewGroup adView = (ViewGroup) adViewMap.get(i);
-                    if (adView != null) {
-                        adView.removeAllViews();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+        for(int i=0;i<AD_POSITIONS.length;i++) {
+            adposition = AD_POSITIONS[i];
+            try {
+                ViewGroup adView = (ViewGroup) adViewMap.get(adposition);
+                if (adView != null) {
+                    adView.removeAllViews();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                RFMNativeAd nativeAd = adRequestMap.get(adposition);
+                nativeAd.destroy();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                RFMNativeAdResponse resp = adResponseMap.get(adposition);
+                if (resp != null) {
+                    resp.destroy();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
-        if(adRequestMap != null) {
-            for(int i=0;i<AD_POSITIONS.length;i++) {
-                adposition = AD_POSITIONS[i];
-                try {
-                    RFMNativeAd nativeAd = adRequestMap.get(adposition);
-                    nativeAd.destroy();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         adViewMap.clear();
         adRequestMap.clear();
         adResponseMap.clear();

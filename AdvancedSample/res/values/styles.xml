@@ -4,6 +4,11 @@
     <style name="AppBaseTheme" parent="android:Theme.Light"/>
     <style name="AppTheme" parent="AppBaseTheme"/>
 
+
+    <style name="Title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18dp</item>
+    </style>
+
     <style name="Theme.SampleApp" parent="Base.Theme.SampleApp"/>
 
     <style name="Base.Theme.SampleApp" parent="Theme.AppCompat.Light.NoActionBar">
@@ -43,13 +48,6 @@
 
     <style name="About.Row.Value" parent="About.Row">
         <item name="android:gravity">top</item>
-    </style>
-
-
-    <style name="RowItemCardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">2dp</item>
     </style>
 
     <style name="HeaderTextView">

@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected String LOG_TAG = "BaseActivity";
@@ -138,6 +139,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             // Caused if the receiver is not registered
         }
+        
+		
     }
 
     @Override
@@ -151,7 +154,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 i.putExtra(RFMAd.ID, mAdUnitId);
                 i.putExtra(TestCaseSettings.DISABLE_VIDEO_ADS, false);
                 String parentClass = getLocalClassName();
-                if (parentClass.equals("FullScreenInterstitialAd") || parentClass.equals("VastAd"))
+                if (parentClass.equals("FullScreenInterstitialAd") ||
+                    parentClass.equals("VastPreMidAd") || parentClass.equals("VastAd"))
                     i.putExtra(TestCaseSettings.DISABLE_FULLSCREEN, false);
                 else
                     i.putExtra(TestCaseSettings.DISABLE_FULLSCREEN, true);

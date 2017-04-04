@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2016. Rubicon Project. All rights reserved
  *
@@ -89,10 +88,12 @@ public class RFMAd implements Comparable<RFMAd> {
     enum AdType {
         BANNER ("Banner", SimpleBanner.class),
         INTERSTITIAL ("Interstitial", FullScreenInterstitialAd.class),
+        //VAST_PRE_MID ("VastPreMid", VastPreMidAd.class),
+        VAST_PRE_MID ("VastPreMid", VastPreMidActivity.class),
         BANNER_IN_LIST ("BannerInList", BannerInList.class),
         CACHED_AD ("CachedAd", CachedAd.class),
         REWARDED_VIDEO ("RewardedVideo", RewardedVideoAd.class),
-        NATIVE_AD_NEWS_FEED("NativeAdNewsFeedList", NativeNewsFeedList.class),
+        NATIVE_AD_NEWS_FEED("NativeNewsFeedList", NativeNewsFeedList.class),
         NATIVE_AD_CHAT_LIST("NativeAdChatAppList", NativeAdChatAppList.class),
         NATIVE_AD_VIDEO("NativeAdContentStream", NativeContentStreamList.class);
 
@@ -304,6 +305,9 @@ public class RFMAd implements Comparable<RFMAd> {
     }
 
     static RFMAd fromBundle(final Bundle bundle) {
+        if (bundle == null)
+            return null;
+
         final Long id = bundle.getLong(ID, -1L);
         final String testCaseName = bundle.getString(TEST_CASE_NAME);
         final String siteId = bundle.getString(SITE_ID);

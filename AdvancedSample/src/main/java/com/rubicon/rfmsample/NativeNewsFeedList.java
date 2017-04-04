@@ -34,10 +34,12 @@ public class NativeNewsFeedList extends BaseActivity{
     private RFMNativeAdAdapter rfmNativeAdAdapter;
     private ListView mNewsFeedList;
     private View footerView;
+    private Map<Integer, View> adViewMap = new HashMap<>();
     @NonNull private NativeUIHandler nativeUIHandler;
     private LayoutInflater inflater;
     private TextView loadMoreButton;
     boolean loadMore = true;
+    private final String serverName = "http://mrp.rubiconproject.com/";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,7 @@ public class NativeNewsFeedList extends BaseActivity{
         };
 
         rfmNativeAdAdapter = new RFMNativeAdAdapter(this, originalAdapter, AD_POSITIONS, nativeUIHandler, RFMNativeAdAdapter.DEFAULT_REPEAT_INTERVAL);
+        rfmNativeAdAdapter.setServerName(serverName);
         mNewsFeedList.setAdapter(rfmNativeAdAdapter);
     }
 
@@ -218,8 +221,8 @@ public class NativeNewsFeedList extends BaseActivity{
         }
 
         public void updateData(final List<FeedData.FeedItem> items) {
-            mItems = items;
-            notifyDataSetChanged();
+                mItems = items;
+                notifyDataSetChanged();
         }
 
         @Override
@@ -261,6 +264,9 @@ public class NativeNewsFeedList extends BaseActivity{
     }
 
     public View getNativeView(int position, View convertView, ViewGroup parent,final RFMNativeAdResponse adResponse) {
+        if (adViewMap.containsKey(position)) {
+            return adViewMap.get(position);
+        }
         if (inflater == null) {
             return null;
         }
@@ -373,6 +379,7 @@ public class NativeNewsFeedList extends BaseActivity{
                 }
             });
             mAdResponseMap.put(position, adResponse);
+            adViewMap.put(position, rowView);
             return rowView;
         } catch (Exception e) {
             e.printStackTrace();
@@ -386,9 +393,17 @@ public class NativeNewsFeedList extends BaseActivity{
                 response.unregisterView();
                 response.destroy();
             } catch (Exception e) {
-
+                Log.d(LOG_TAG, "Failed to clean up response "+e.getMessage());
             }
         }
+        for(View view:adViewMap.values()) {
+            try {
+                view = null;
+            } catch (Exception e) {
+                Log.d(LOG_TAG, "Failed to clean up ad view "+e.getMessage());
+            }
+        }
+        adViewMap.clear();
         rfmNativeAdAdapter.destroy();
         mNewsFeedItemList.clear();
         originalAdapter.clear();

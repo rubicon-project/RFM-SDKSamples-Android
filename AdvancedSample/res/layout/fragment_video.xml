@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/videoExampleLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SampleMainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:background="#000000"
+        android:orientation="vertical"
+        android:id="@+id/videoContainer">
+
+        <com.rubicon.rfmsample.EPVideoPlayerWithAdPlayback
+            android:id="@+id/videoPlayerWithAdPlayback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.rubicon.rfmsample.samplevideoplayer.SampleVideoPlayer
+                android:id="@+id/videoPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+            <FrameLayout
+                android:id="@+id/adUiContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.rubicon.rfmsample.EPVideoPlayerWithAdPlayback>
+    </LinearLayout>
+
+    <!-- UI element for viewing SDK event log -->
+    <ScrollView
+        android:id="@+id/logScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:padding="5dp"
+        android:background="#DDDDDD">
+
+        <TextView
+            android:id="@+id/logText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+    </ScrollView>
+
+</LinearLayout>

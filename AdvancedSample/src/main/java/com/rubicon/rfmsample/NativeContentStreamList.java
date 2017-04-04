@@ -41,6 +41,7 @@ import com.rfm.util.VideoCacheListener;
 import com.rubicon.rfmsample.FeedData.FeedItem;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import com.squareup.picasso.Picasso;
 
@@ -458,21 +459,17 @@ public class NativeContentStreamList extends BaseActivity {
     }
 
     public void cleanupAds() {
-        if(adRequestMap != null) {
-            for (int i:AD_POSITIONS) {
+            int adposition;
+            for(int i=0;i<AD_POSITIONS.length;i++) {
+                adposition = AD_POSITIONS[i];
                 try {
-                    RFMNativeAd nativeAd = adRequestMap.get(i);
+                    RFMNativeAd nativeAd = adRequestMap.get(adposition);
                     nativeAd.destroy();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
-
-        if(adViewMap != null) {
-            for(int i=0;i<AD_POSITIONS.length;i++) {
                 try {
-                    ViewGroup adView = (ViewGroup) adViewMap.get(i);
+                    ViewGroup adView = (ViewGroup) adViewMap.get(adposition);
                     if (adView != null) {
                         adView.removeAllViews();
                     }
@@ -480,12 +477,20 @@ public class NativeContentStreamList extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
-        adViewMap.clear();
-        adRequestMap.clear();
-        adResponseMap.clear();
-    }
 
+                try {
+                    RFMNativeAdResponse resp = adResponseMap.get(adposition);
+                    if (resp != null) {
+                        resp.destroy();
+                    }
+
+                }catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            adViewMap.clear();
+            adRequestMap.clear();
+            adResponseMap.clear();
+        }
 }
 

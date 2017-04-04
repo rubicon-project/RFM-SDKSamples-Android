@@ -83,46 +83,52 @@ class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final List<RFMAd> rfmAdList = new ArrayList<>();
 
+        int count = 0;
+
         rfmAdList.add(new RFMAd(-1, "Simple Banner", "",
                 RFMAd.AdType.BANNER, 1, 0, RFMAd.LocationType.FIXED, "6","0.0", "0.0",
-                "", 320, 50, true, false, false, false, "28401", false, "http://mrp.rubiconproject.com", "4A24CB908FB3013209C822000B2E019E", "111008", 1));
+                "", 320, 50, true, false, false, false, "28401", false, "http://mrp.rubiconproject.com", "4A24CB908FB3013209C822000B2E019E", "111008", count++));
 
         rfmAdList.add(new RFMAd(-1, "Interstitial", "",
                 RFMAd.AdType.INTERSTITIAL, 1, 0, RFMAd.LocationType.FIXED, "6", "0.0", "0.0",
-                "", 320, 50, true, true, false, false, "28854", false, "http://mrp.rubiconproject.com", "FB4FB140C13601320C4722000B3510F7", "111008", 2));
+                "", 320, 50, true, true, false, false, "28854", false, "http://mrp.rubiconproject.com", "FB4FB140C13601320C4722000B3510F7", "111008", count++));
 
         rfmAdList.add(new RFMAd(-1, "Banner in List View", "",
                 RFMAd.AdType.BANNER_IN_LIST, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 50, true, false, false, false, "0", false, "http://mrp.rubiconproject.com", "281844F0497A0130031D123139244773", "111008", 3));
+                "", 320, 50, true, false, false, false, "0", false, "http://mrp.rubiconproject.com", "281844F0497A0130031D123139244773", "111008", count++));
 
         rfmAdList.add(new RFMAd(-1, "Vast Ad", "",
                 RFMAd.AdType.INTERSTITIAL, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 50, true, true, false, true, "30468", false, "http://mrp.rubiconproject.com", "D0B80A70B6E30133107922000B3510F7", "111315", 4));
+                "", 320, 50, true, true, false, true, "30468", false, "http://mrp.rubiconproject.com", "D0B80A70B6E30133107922000B3510F7", "111315", count++));
+
+        rfmAdList.add(new RFMAd(-1, "Vast Pre Mid Ad", "",
+                RFMAd.AdType.VAST_PRE_MID, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 50, true, true, false, true, "30468", false, "http://mrp.rubiconproject.com", "D0B80A70B6E30133107922000B3510F7", "111315", count++));
 
         rfmAdList.add(new RFMAd(-1, "Cached Banner Ad", "",
                 RFMAd.AdType.CACHED_AD, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 50, true, true, false, false, "0", false, "http://mrp.rubiconproject.com", "281844F0497A0130031D123139244773", "111008", 5));
+                "", 320, 50, true, true, false, false, "0", false, "http://mrp.rubiconproject.com", "281844F0497A0130031D123139244773", "111008", count++));
 
         rfmAdList.add(new RFMAd(-1, "Cached Interstitial Ad", "",
                 RFMAd.AdType.INTERSTITIAL, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 50, true, true, true, false, "28407", false, "http://mrp.rubiconproject.com", "CD962D408FB8013209CA22000B2E019E", "111315", 6));
+                "", 320, 50, true, true, true, false, "28407", false, "http://mrp.rubiconproject.com", "CD962D408FB8013209CA22000B2E019E", "111315", count++));
 
         rfmAdList.add(new RFMAd(-1, "Mediation Banner", "",
                 RFMAd.AdType.BANNER, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                  "", 320, 50, true, true, false, false, "0", false, "http://mrp.rubiconproject.com", "7B8997905A6E01330D6A22000B2E019E", "111008", 7));
+                  "", 320, 50, true, true, false, false, "0", false, "http://mrp.rubiconproject.com", "7B8997905A6E01330D6A22000B2E019E", "111008", count++));
 
         rfmAdList.add(new RFMAd(-1, "Rewarded Video Ad", "",
                 RFMAd.AdType.REWARDED_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 480, true, true, false, true, "0", false, "http://mrp.rubiconproject.com", "CDBBF1A037F60134162922000B3510F7", "111315", 8));
+                "", 320, 480, true, true, false, true, "0", false, "http://mrp.rubiconproject.com", "CDBBF1A037F60134162922000B3510F7", "111315", count++));
 
-        rfmAdList.add(new RFMAd(-1, "Native Ad with RFM Adapter", "", RFMAd.AdType.NATIVE_AD_NEWS_FEED, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 9));
+        rfmAdList.add(new RFMAd(-1, "Native Ad News feed with Native Adapter", "", RFMAd.AdType.NATIVE_AD_NEWS_FEED, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", count++));
 
         rfmAdList.add(new RFMAd(-1, "Native Ad Chat List", "", RFMAd.AdType.NATIVE_AD_CHAT_LIST, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 10));
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", count++));
 
         rfmAdList.add(new RFMAd(-1, "Native Ad Content Steam", "", RFMAd.AdType.NATIVE_AD_VIDEO, 1, 0, RFMAd.LocationType.FIXED, "6", "0", "0",
-                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", 11));
+                "", 320, 480, true, false, false, false, "", false,"http://mrp.rubiconproject.com", RFMConstants.NATIVE_AD_PREDEFINED_PLACEMENT_ID, "111315", count++));
 
         sqLiteDatabase.execSQL(DATABASE_CREATE);
         sqLiteDatabase.beginTransaction();

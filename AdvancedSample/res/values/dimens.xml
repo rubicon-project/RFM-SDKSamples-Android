@@ -8,9 +8,6 @@
     <dimen name="backdrop_subtext_margintop">110dp</dimen>
     <dimen name="backdrop_maintext_marginbottom">65dp</dimen>
 
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
     <dimen name="feed_item_padding_top_bottom">20dp</dimen>
     <dimen name="feed_item_padding_left_right">15dp</dimen>
 
@@ -23,5 +20,6 @@
     <dimen name="feed_item_corner_radius">3dp</dimen>
     <dimen name="feed_item_border_width">1dp</dimen>
 
+    <dimen name="vast_pre_mid_text">16sp</dimen>
 
 </resources>

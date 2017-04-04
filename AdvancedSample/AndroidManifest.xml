@@ -3,11 +3,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rubicon.rfmsample"
     android:versionCode="31"
-    android:versionName="6.1.0">
+    android:versionName="6.2.0">
 
     <!-- This sample+SDK requires Android SDK 10+. -->
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="18"
         android:targetSdkVersion="23" />
 
     <!-- Required permissions for RFM Ad SDK -->
@@ -63,7 +63,7 @@
         <activity
             android:name=".NativeNewsFeedList"
             android:configChanges="orientation|screenSize"
-            android:label="NativeAdFeedList" />
+            android:label="NativeFeedList" />
 
         <activity
             android:name=".NativeAdChatAppList"
@@ -86,6 +86,11 @@
 
         <activity
             android:name=".AboutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name=".VastPreMidActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
 

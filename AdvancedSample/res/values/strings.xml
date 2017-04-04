@@ -10,6 +10,7 @@
     <string name="preset">PRESET</string>
     <string name="user_defined">USER DEFINED</string>
     <string name="header">Header</string>
+    <string name="vast_pre_mid">VAST Pre Mid Ad</string>
 
     <!-- Add test case -->
     <string name="menu_add_test_case">Add Test Case</string>
@@ -71,15 +72,11 @@
 
 
     <!-- Values used in Demo activities -->
-    <string name="getAd">Get Ad</string>
-    <string name="getLocation">Get Location</string>
-    <string name="clearConsole">Clear Console</string>
-    <string name="defaultConsoleText">Sample App Ad Status \n--------------------------------\n</string>
-
     <string name="displaycachedad">Display Cached Ad</string>
     <string name="displayad">Display Ad</string>
     <string name="loadmore"> Load More </string>
     <string name="refresh"> Refresh </string>
     <string name="label_title">Title</string>
+
 
 </resources>
