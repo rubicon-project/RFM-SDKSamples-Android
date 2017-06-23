@@ -182,6 +182,11 @@ public class SimpleBanner extends BaseActivity {
                         case FULL_SCREEN_AD_DISMISSED:
                             appendTextToConsole("RFM Ad: Full screen ad dismissed");
                             break;
+
+                        case AD_CLICKED:
+                            appendTextToConsole("RFM Ad: Banner clicked");
+                            break;
+
                         default:
                             break;
                     }

@@ -170,6 +170,9 @@ public class FullScreenInterstitialAd extends BaseActivity {
 					case FULL_SCREEN_AD_DISMISSED:
 						appendTextToConsole("RFM Ad: Full screen ad dismissed");
 						break;
+					case AD_CLICKED:
+						appendTextToConsole("RFM Ad: Full screen ad clicked");
+						break;
 					default:
 						break;
 				}

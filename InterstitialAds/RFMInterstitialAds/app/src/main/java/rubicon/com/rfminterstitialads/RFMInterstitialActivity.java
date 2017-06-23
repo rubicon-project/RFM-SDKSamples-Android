@@ -133,6 +133,11 @@ public class RFMInterstitialActivity extends AppCompatActivity {
                         case FULL_SCREEN_AD_DISMISSED:
                             Log.i(LOG_TAG, "RFM Ad: Full screen ad dismissed");
                             break;
+
+                        case AD_CLICKED:
+                            Log.i(LOG_TAG, "RFM Ad: Interstitial clicked");
+                            break;
+
                         default:
                             break;
                     }

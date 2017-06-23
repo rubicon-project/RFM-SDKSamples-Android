@@ -195,6 +195,11 @@ public class BannerInList extends BaseActivity {
 				case FULL_SCREEN_AD_DISMISSED:
 					Log.v(LOG_TAG, "FULL SCREEN Ad Dismissed ");
 					break;
+
+				case AD_CLICKED:
+					Log.v(LOG_TAG, "Ad clicked ");
+					break;
+
 				default:
 					break;
 			}
